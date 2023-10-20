@@ -1,7 +1,7 @@
 import django.core
 import django.db
-from validators import ValidateMustContain
 
+from catalog.validators import ValidateMustContain
 from core.models import CatalogAbstraction
 
 
