@@ -3,6 +3,8 @@ import re
 from django.core.exceptions import ValidationError
 import django.db
 
+from django import forms
+
 
 def normilize(value):
     letters = {
@@ -39,18 +41,23 @@ class CatalogAbstraction(django.db.models.Model):
         help_text="Максимум 150 символов",
     )
     normilized_name = django.db.models.CharField(
-        unique=True,
         auto_created=True,
+        unique=True,
         verbose_name=("Нормализоваванное имя"),
         max_length=150,
     )
 
     def save(self, *args, **kwargs):
-        self.normilized_name = normilize(self.title())
+        self.normilized_name = normilize(self.name)
+        self.clean()
         super(CatalogAbstraction, self).save(*args, **kwargs)
 
     def clean(self):
-        if self.normilized_name is None:
+        try:
+            self.validate_unique()
+        except ValidationError:
+            forms.ValidationError("")
+        if self.normilized_name == ["Категория с таким Нормализоваванное имя уже существует."]:
             raise ValidationError(
                 "Название категории уже занято. Попробуйте другое"
                 )
