@@ -2,31 +2,10 @@ import re
 
 from django.core.exceptions import ValidationError
 import django.db
+import transliterate
 
-from django import forms
 
-
-def normilize(value):
-    letters = {
-        "а": "a",
-        "е": "e",
-        "о": "o",
-        "р": "p",
-        "с": "c",
-        "т": "t",
-        "у": "y",
-        "х": "x",
-        "м": "m",
-        "н": "h",
-        "в": "b",
-        "к": "k",
-    }
-    value = value.lower()
-    value = re.sub(r"[^\w\s]", "", value)
-    value = value.replace(" ", "")
-    for el in letters.items():
-        value = value.replace(el[0], el[1])
-    return value
+ONLY_LETTERS_REGEX = re.compile(r"[^\w]")
 
 
 class CatalogAbstraction(django.db.models.Model):
@@ -41,26 +20,40 @@ class CatalogAbstraction(django.db.models.Model):
         help_text="Максимум 150 символов",
     )
     normilized_name = django.db.models.CharField(
-        auto_created=True,
+        editable=False,
         unique=True,
         verbose_name=("Нормализоваванное имя"),
         max_length=150,
     )
 
+    def _generate_normilized_name(self, value):
+        try:
+            translitereted = transliterate.translit(
+                self.name.lower(),
+                reversed=True
+            )
+        except transliterate.exceptions.LanguageDetectionError:
+            translitereted = self.name.lower()
+
+        return ONLY_LETTERS_REGEX.sub(
+            "",
+            translitereted
+        )
+
     def save(self, *args, **kwargs):
-        self.normilized_name = normilize(self.name)
-        self.clean()
+        self.normilized_name = self._generate_normilized_name()
         super(CatalogAbstraction, self).save(*args, **kwargs)
 
     def clean(self):
-        try:
-            self.validate_unique()
-        except ValidationError:
-            forms.ValidationError("")
-        if self.normilized_name == ["Категория с таким Нормализоваванное имя уже существует."]:
-            raise ValidationError(
-                "Название категории уже занято. Попробуйте другое"
-                )
+        self.normilized_name = self._generate_normilized_name()
+        if (
+            type(self)
+            .objectfilter(normilized_name=self.normilized_name)
+            .exclude(id=self.id)
+            .count()
+            > 0
+        ):
+            raise ValidationError
 
     class Meta:
         abstract = True

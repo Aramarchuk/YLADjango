@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 from django.test import Client, override_settings, TestCase
 from parameterized import parameterized
 
-from .middleware import SimpleMiddleware
+from lyceum.lyceum.middleware import SimpleMiddleware
 
 
 class StaticUrlTests(TestCase):
@@ -47,8 +47,5 @@ class StaticUrlTests(TestCase):
         responses = tuple(
             middleware(request).content.decode() for _ in range(10)
         )
-
-        # ensure get_response has been returned
-        # (or not, if your middleware does something else)
 
         self.assertNotIn(excepted, responses)

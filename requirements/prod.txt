@@ -1,3 +1,7 @@
 asgiref==3.7.2
 Django==4.2.5
 python-dotenv==1.0.0
+pillow==10.1.0
+sorl-thumbnail==12.10.0
+django-cleanup==8.0.0
+transliterate==1.10.2

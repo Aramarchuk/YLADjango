@@ -30,11 +30,14 @@ pip install -r requirements/test.txt
 cp config.env .env
 ```
 
-## LAUNCH
-```bash
-python manage.py runserver
-```
-
 ## DATABASE
 Структура базы данных отображена в файле ER.jpg в корне проекта
 ![alt text](ER.jpg)
+
+## LAUNCH
+Нужно применить миграции, чтобы база данных работала
+Чтобы получить доступ к админке, нужно создать пользователя с соответствующим доступом
+```bash
+python lyceum/manage.py migrate
+python lyceum/manage.py createsuperuser
+```

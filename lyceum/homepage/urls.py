@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from lyceum.homepage import views
 
 
 urlpatterns = [
