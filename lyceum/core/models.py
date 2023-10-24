@@ -26,7 +26,7 @@ class CatalogAbstraction(django.db.models.Model):
         max_length=150,
     )
 
-    def _generate_normilized_name(self, value):
+    def _generate_normilized_name(self):
         try:
             translitereted = transliterate.translit(
                 self.name.lower(), reversed=True
@@ -44,12 +44,12 @@ class CatalogAbstraction(django.db.models.Model):
         self.normilized_name = self._generate_normilized_name()
         if (
             type(self)
-            .objectfilter(normilized_name=self.normilized_name)
+            .objects.filter(normilized_name=self.normilized_name)
             .exclude(id=self.id)
             .count()
             > 0
         ):
-            raise ValidationError
+            raise ValidationError("Такое название уже существует")
 
     class Meta:
         abstract = True

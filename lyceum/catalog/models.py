@@ -1,8 +1,8 @@
 import django.core
 import django.db
 
-from lyceum.catalog.validators import ValidateMustContain
-from lyceum.core.models import CatalogAbstraction
+from catalog.validators import ValidateMustContain
+from core.models import CatalogAbstraction
 
 
 class Tag(CatalogAbstraction):

@@ -1,6 +1,6 @@
 from django.urls import path, re_path, register_converter
 
-from lyceum.catalog import converters, views
+from catalog import converters, views
 
 register_converter(converters.PositiveInt, "n_converter")
 
