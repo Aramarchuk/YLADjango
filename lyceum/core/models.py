@@ -29,16 +29,12 @@ class CatalogAbstraction(django.db.models.Model):
     def _generate_normilized_name(self, value):
         try:
             translitereted = transliterate.translit(
-                self.name.lower(),
-                reversed=True
+                self.name.lower(), reversed=True
             )
         except transliterate.exceptions.LanguageDetectionError:
             translitereted = self.name.lower()
 
-        return ONLY_LETTERS_REGEX.sub(
-            "",
-            translitereted
-        )
+        return ONLY_LETTERS_REGEX.sub("", translitereted)
 
     def save(self, *args, **kwargs):
         self.normilized_name = self._generate_normilized_name()

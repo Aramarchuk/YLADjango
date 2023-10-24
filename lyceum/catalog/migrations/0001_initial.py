@@ -31,7 +31,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "is_published",
-                    models.BooleanField(default=True, verbose_name="опубликовано"),
+                    models.BooleanField(
+                        default=True, verbose_name="опубликовано"
+                    ),
                 ),
                 (
                     "name",
@@ -91,7 +93,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "is_published",
-                    models.BooleanField(default=True, verbose_name="опубликовано"),
+                    models.BooleanField(
+                        default=True, verbose_name="опубликовано"
+                    ),
                 ),
                 (
                     "name",
@@ -140,7 +144,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "is_published",
-                    models.BooleanField(default=True, verbose_name="опубликовано"),
+                    models.BooleanField(
+                        default=True, verbose_name="опубликовано"
+                    ),
                 ),
                 (
                     "name",
@@ -173,7 +179,12 @@ class Migration(migrations.Migration):
                         verbose_name="категория",
                     ),
                 ),
-                ("tags", models.ManyToManyField(to="catalog.tag", verbose_name="теги")),
+                (
+                    "tags",
+                    models.ManyToManyField(
+                        to="catalog.tag", verbose_name="теги"
+                    ),
+                ),
             ],
             options={
                 "verbose_name": "товар",
