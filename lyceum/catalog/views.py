@@ -1,8 +1,14 @@
 from django.http import HttpResponse
+from django.shortcuts import render
+
+from catalog.models import Item
 
 
 def item_list(request):
-    return HttpResponse("<body>Список элементов</body>")
+    template = "catalog/catalog.html"
+    context = {"items": list(Item.objects.all())}
+    print(context)
+    return render(request, template, context)
 
 
 def item_detail(request, item_n):

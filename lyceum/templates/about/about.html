@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="px-4 pt-5 my-5 text-center border-bottom">
+  <h1 class="display-4 fw-bold text-body-emphasis">О проекте</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">Меня держат в подвале и заставляют учить Джангу. Помогите</p>
+  </div>
+  <div class="overflow-hidden">
+    <div class="container px-5">
+      <img src="{% static './img/image_about.jpg'%}" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="299" height="302" loading="lazy">
+    </div>
+  </div>
+</div>
+
+{% endblock %}

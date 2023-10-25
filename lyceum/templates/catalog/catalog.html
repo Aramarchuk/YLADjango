@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% comment %} {% block content %}
+    <div id="main" class="item-list">
+        <h1>Список товаров:</h1>
+        {% for item in items %}
+            <div class="item">
+                <a href="{{ product.get_absolute_url }}">{{ item.name }}</a><br>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %} {% endcomment %}
+<div class="album py-5 bg-light">
+    <div class="container">
+      {% for item in items %}
+        {% include "includes/card.html" %}
+      {% endfor %}
+
+{% endblock content %}
