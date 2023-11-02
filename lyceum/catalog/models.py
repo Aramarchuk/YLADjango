@@ -61,7 +61,11 @@ class Item(CatalogAbstraction):
         ),
         validators=[ValidateMustContain("превосходно", "роскошно")],
     )
-    tags = models.ManyToManyField(Tag, verbose_name=("теги"), default=None,)
+    tags = models.ManyToManyField(
+        Tag,
+        verbose_name=("теги"),
+        default=None,
+    )
     category = models.ForeignKey(
         "category",
         on_delete=models.CASCADE,

@@ -6,7 +6,10 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("catalog", "0003_alter_category_id_alter_category_normilized_name_and_more"),
+        (
+            "catalog",
+            "0003_alter_category_id_alter_category_normilized_name_and_more",
+        ),
     ]
 
     operations = [
@@ -24,7 +27,9 @@ class Migration(migrations.Migration):
                 unique=True,
                 validators=[
                     django.core.validators.MaxLengthValidator(200),
-                    django.core.validators.RegexValidator(regex="[-a-zA-Z\\d_]+"),
+                    django.core.validators.RegexValidator(
+                        regex="[-a-zA-Z\\d_]+"
+                    ),
                 ],
                 verbose_name="слаг",
             ),
