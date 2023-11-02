@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 from django.test import Client, override_settings, TestCase
 from parameterized import parameterized
 
-from lyceum.lyceum.middleware import SimpleMiddleware
+from .middleware import SimpleMiddleware
 
 
 class StaticUrlTests(TestCase):

@@ -18,7 +18,6 @@ class Tag(CatalogAbstraction):
     slug = models.TextField(
         unique=True,
         verbose_name=("слаг"),
-        default=None,
         validators=[
             django.core.validators.MaxLengthValidator(200),
             django.core.validators.RegexValidator(regex=r"[-a-zA-Z\d_]+"),
@@ -62,7 +61,7 @@ class Item(CatalogAbstraction):
         ),
         validators=[ValidateMustContain("превосходно", "роскошно")],
     )
-    tags = models.ManyToManyField(Tag, verbose_name=("теги"))
+    tags = models.ManyToManyField(Tag, verbose_name=("теги"), default=None,)
     category = models.ForeignKey(
         "category",
         on_delete=models.CASCADE,

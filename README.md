@@ -41,4 +41,5 @@ cp config.env .env
 python lyceum/manage.py migrate
 python lyceum/manage.py createsuperuser
 python lyceum/manage.py loaddata lyceum/fixtures/data.json
+python lyceum/manage.py runserver
 ```
