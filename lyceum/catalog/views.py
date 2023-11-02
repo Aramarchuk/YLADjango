@@ -4,6 +4,9 @@ from django.shortcuts import render
 from catalog.models import Item
 
 
+__all__ = ()
+
+
 def item_list(request):
     template = "catalog/catalog.html"
     context = {"items": list(Item.objects.all())}

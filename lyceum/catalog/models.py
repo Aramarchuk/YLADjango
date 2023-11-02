@@ -7,6 +7,9 @@ from catalog.validators import ValidateMustContain
 from core.models import CatalogAbstraction
 
 
+__all__ = ()
+
+
 def item_directory_path(instance, filename):
     return (
         f"catalog/{str(instance.item.id)[:3].zfill(3)}"
@@ -77,7 +80,7 @@ class Item(CatalogAbstraction):
     def image_tmb(self):
         if self.main_image.image:
             return mark_safe(
-                f"<img src='{self.main_image.get_image_50x50.url}'>"
+                f"<img src='{self.main_image.get_image_50x50.url}'>",
             )
         return "Нет изображения"
 

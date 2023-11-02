@@ -32,8 +32,10 @@ SECRET_KEY = os.getenv("DJANGO_SECRET", "not_so_secret")
 DEBUG_ENV = os.getenv("DJANGO_DEBUG", "True").lower()
 DEBUG = DEBUG_ENV in ["true", "yes", "y", "t"]
 
-
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
+if not DEBUG and "DJANGO_ALLOWED_HOSTS" in os.environ:
+    ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(",")
+else:
+    ALLOWED_HOSTS = ["*"]
 
 ALLOW_REVERSE = os.getenv("DJANGO_ALLOW_REVERSE", "True") in [
     "",
@@ -101,7 +103,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
-    }
+    },
 }
 
 

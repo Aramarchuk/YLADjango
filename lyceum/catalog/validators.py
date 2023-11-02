@@ -4,6 +4,9 @@ from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
 
 
+__all__ = ()
+
+
 @deconstructible
 class ValidateMustContain:
     words = []

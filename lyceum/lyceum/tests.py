@@ -6,6 +6,9 @@ from parameterized import parameterized
 from .middleware import SimpleMiddleware
 
 
+__all__ = ()
+
+
 class StaticUrlTests(TestCase):
     @parameterized.expand(
         [
@@ -14,7 +17,7 @@ class StaticUrlTests(TestCase):
             ("Привет, мир!", "тевирП, рим!"),
             ("АБВОовапу арак fffff", "упавоОВБА кара fffff"),
             ("Hello, world!", "Hello, world!"),
-        ]
+        ],
     )
     @override_settings(ALLOW_REVERSE=True)
     def test_positive_middleware(self, text, excepted):
@@ -35,7 +38,7 @@ class StaticUrlTests(TestCase):
             ("zzzРаз0tre", "zzzзаР0tre"),
             ("Привет, мир!", "тевирП, рим!"),
             ("АБВОовапу арак fffff", "упавоОВБА кара fffff"),
-        ]
+        ],
     )
     @override_settings(ALLOW_REVERSE=False)
     def test_negative_allowe_middleware(self, text, excepted):

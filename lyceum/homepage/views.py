@@ -2,6 +2,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 
+__all__ = ()
+
+
 def home(request):
     template = "homepage/home.html"
     context = {}

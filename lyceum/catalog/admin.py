@@ -4,6 +4,9 @@ from sorl.thumbnail.admin import AdminImageMixin
 import catalog.models
 
 
+__all__ = ()
+
+
 class MainImageInline(AdminImageMixin, admin.TabularInline):
     model = catalog.models.MainImage
     fields = ("image",)

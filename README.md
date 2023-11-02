@@ -43,3 +43,10 @@ python lyceum/manage.py createsuperuser
 python lyceum/manage.py loaddata lyceum/fixtures/data.json
 python lyceum/manage.py runserver
 ```
+
+LMS говорит, что ```
+'No run command in readme
+```
+Так что
+python3 manage.py runserver
+django-admin runserver

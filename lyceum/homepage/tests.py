@@ -3,6 +3,9 @@ from http import HTTPStatus
 from django.test import Client, override_settings, TestCase
 
 
+__all__ = ()
+
+
 class StaticUrlTests(TestCase):
     def test_homepage_positive_endpoint(self):
         response = Client().get("/")

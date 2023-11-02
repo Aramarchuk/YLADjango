@@ -7,6 +7,9 @@ from parameterized import parameterized
 from catalog import models
 
 
+__all__ = ("StaticUrlTests", "StaticModelTests")
+
+
 class StaticUrlTests(TestCase):
     @parameterized.expand(
         [
@@ -17,7 +20,7 @@ class StaticUrlTests(TestCase):
             ("/re/1234", HTTPStatus.OK),
             ("/converter/1", HTTPStatus.OK),
             ("/converter/1234", HTTPStatus.OK),
-        ]
+        ],
     )
     def test_catalog_positive_endpoint(self, item, excepted):
         response = Client().get(f"/catalog{item}/")
@@ -33,7 +36,7 @@ class StaticUrlTests(TestCase):
             ("/converter/12r34", HTTPStatus.NOT_FOUND),
             ("/converter/0", HTTPStatus.NOT_FOUND),
             ("/converter/-1", HTTPStatus.NOT_FOUND),
-        ]
+        ],
     )
     def test_catalog_negative_endpoint(self, item, excepted):
         response = Client().get(f"/catalog{item}/")
@@ -52,7 +55,7 @@ class StaticModelTests(TestCase):
         )
         print(cls.category)
         cls.tag = models.Tag.objects.create(
-            is_published=True, name="Тестовый тег", slug="test-tag-slug"
+            is_published=True, name="Тестовый тег", slug="test-tag-slug",
         )
 
     @parameterized.expand(
@@ -60,7 +63,7 @@ class StaticModelTests(TestCase):
             ("Without", "Not Prevoshodno"),
             ("Empty", ""),
             ("Splitted", "П р е в о с х о д н о"),
-        ]
+        ],
     )
     def test_create_perfection_validators_negative(self, names, texts):
         item_count = models.Item.objects.count()
@@ -82,7 +85,7 @@ class StaticModelTests(TestCase):
             ("0", "Восхитительно и Превосходно"),
             ("0", "Не только превосходно"),
             ("0", "ПреПре?Превосходно"),
-        ]
+        ],
     )
     def test_create_item_positive(self, names, texts):
         item_count = models.Item.objects.count()

@@ -2,6 +2,8 @@ import re
 
 from django.conf import settings
 
+__all__ = ()
+
 
 class SimpleMiddleware:
     time = 0
