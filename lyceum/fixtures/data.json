@@ -1,138 +1,166 @@
 [
-{
-  "model": "catalog.tag",
-  "pk": 1,
-  "fields": {
-    "is_published": true,
-    "name": "Реалистичный",
-    "slug": "real"
+  {
+    "model": "catalog.tag",
+    "pk": 1,
+    "fields": {
+      "is_published": true,
+      "name": "Реалистичный",
+      "normilized_name": "realistichniy",
+      "slug": "real"
+    }
+  },
+  {
+    "model": "catalog.tag",
+    "pk": 2,
+    "fields": {
+      "is_published": true,
+      "name": "Мемный",
+      "normilized_name": "memniy",
+      "slug": "memes"
+    }
+  },
+  {
+    "model": "catalog.tag",
+    "pk": 3,
+    "fields": {
+      "is_published": true,
+      "name": "Нарисованный",
+      "normilized_name": "narisovanniy",
+      "slug": "painted"
+    }
+  },
+  {
+    "model": "catalog.tag",
+    "pk": 4,
+    "fields": {
+      "is_published": true,
+      "name": "Именованный",
+      "normilized_name": "imenovanniy",
+      "slug": "named"
+    }
+  },
+  {
+    "model": "catalog.tag",
+    "pk": 5,
+    "fields": {
+      "is_published": true,
+      "name": "Дикий",
+      "normilized_name": "dikiy",
+      "slug": "wild"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "is_published": true,
+      "name": "Кот",
+      "normilized_name": "kot",
+      "slug": "Cat",
+      "weight": 100
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "is_published": true,
+      "name": "Собака",
+      "normilized_name": "sobaka",
+      "slug": "dog",
+      "weight": 100
+    }
+  },
+  {
+    "model": "catalog.item",
+    "pk": 1,
+    "fields": {
+      "is_published": true,
+      "name": "Кот с Петуньями",
+      "normilized_name": "ksp",
+      "text": "Тот самый кот, которому роскошно положили цветок петуньи на голову.", 
+      "category": 1,
+      "tags": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "model": "catalog.item",
+    "pk": 2,
+    "fields": {
+      "is_published": true,
+      "name": "Кот Борис",
+      "normilized_name": "kotboris",
+      "text": "Превосходно сыгравший в рекламе корма",
+      "category": 1,
+      "tags": [
+        1,
+        2,
+        4
+      ]
+    }
+  },
+  {
+    "model": "catalog.item",
+    "pk": 3,
+    "fields": {
+      "is_published": true,
+      "name": "Doge",
+      "normilized_name": "doge",
+      "text": "Превосходно служивший нам сиба-ину по кличке Кабосу, недавно покинул наш мир. Вечная роскошная память.",
+      "category": 2,
+      "tags": [
+        1,
+        2,
+        4
+      ]
+    }
+  },
+  {
+    "model": "catalog.item",
+    "pk": 4,
+    "fields": {
+      "is_published": true,
+      "name": "Какая-то собака",
+      "normilized_name": "kakaya-tosobaka",
+      "text": "На улице сегодня видел. Роскошно.",
+      "category": 2,
+      "tags": [
+        1,
+        5
+      ]
+    }
+  },
+  {
+    "model": "catalog.item",
+    "pk": 6,
+    "fields": {
+      "is_published": true,
+      "name": "Багованный кот",
+      "normilized_name": "bagovanniykot",
+      "text": "Живёт роскошно, пока я работаю над этим проектом.",
+      "category": 1,
+      "tags": [
+        5
+      ]
+    }
+  },
+  {
+    "model": "catalog.mainimage",
+    "pk": 1,
+    "fields": {
+      "image": "catalog/001/1/wtf.png",
+      "item": 1
+    }
+  },
+  {
+    "model": "catalog.image",
+    "pk": 1,
+    "fields": {
+      "image": "catalog/001/1/HSZ2nq5SPvA.jpg",
+      "item": 1
+    }
   }
-},
-{
-  "model": "catalog.tag",
-  "pk": 2,
-  "fields": {
-    "is_published": true,
-    "name": "Мемный",
-    "slug": "memes"
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 3,
-  "fields": {
-    "is_published": true,
-    "name": "Нарисованный",
-    "slug": "painted"
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 4,
-  "fields": {
-    "is_published": true,
-    "name": "Именованный",
-    "slug": "named"
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 5,
-  "fields": {
-    "is_published": true,
-    "name": "Дикий",
-    "slug": "wild"
-  }
-},
-{
-  "model": "catalog.category",
-  "pk": 1,
-  "fields": {
-    "is_published": true,
-    "name": "Кот",
-    "slug": "Cat",
-    "weight": 100
-  }
-},
-{
-  "model": "catalog.category",
-  "pk": 2,
-  "fields": {
-    "is_published": true,
-    "name": "Собака",
-    "slug": "dog",
-    "weight": 100
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 1,
-  "fields": {
-    "is_published": true,
-    "name": "Кот с Петуньями",
-    "text": "Тот самый кот, которому роскошно положили цветок петуньи на голову.",
-    "category": 1,
-    "tags": [
-      1,
-      2
-    ]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 2,
-  "fields": {
-    "is_published": true,
-    "name": "Кот Борис",
-    "text": "Превосходно сыгравший в рекламе корма",
-    "category": 1,
-    "tags": [
-      1,
-      2,
-      4
-    ]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 3,
-  "fields": {
-    "is_published": true,
-    "name": "Doge",
-    "text": "Превосходно служивший нам сиба-ину по кличке Кабосу, недавно покинул наш мир. Вечная роскошная память.",
-    "category": 2,
-    "tags": [
-      1,
-      2,
-      4
-    ]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 4,
-  "fields": {
-    "is_published": true,
-    "name": "Какая-то собака",
-    "text": "На улице сегодня видел. Роскошно.",
-    "category": 2,
-    "tags": [
-      1,
-      5
-    ]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 6,
-  "fields": {
-    "is_published": true,
-    "name": "Багованный кот",
-    "text": "Живёт роскошно, пока я работаю над этим проектом.",
-    "category": 1,
-    "tags": [
-      5
-    ]
-  }
-}
-]
+  ]
