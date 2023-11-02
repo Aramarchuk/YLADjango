@@ -9,7 +9,7 @@
     <header class="d-flex justify-content-center py-3">
       {% with request.resolver_match.view_name as view_name %}
       <ul class="nav nav-pills">
-        <li class="nav-item"><a href="/" class="nav-link {% if view_name == 'homepage.views.home' %}
+        <li class="nav-item"><a href="/" class="nav-link {% if view_name == 'homepage:home' %}
             active
           {% endif %}"     
             aria-current="page">На главную</a></li>

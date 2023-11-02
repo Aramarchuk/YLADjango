@@ -12,7 +12,9 @@ def item_list(request):
 
 
 def item_detail(request, item_n):
-    return HttpResponse("<body>Подробно элемент</body>")
+    template = "catalog/detail.html"
+    context = {}
+    return render(request, template, context)
 
 
 def catalog_n(request, n):

@@ -1,40 +1,23 @@
 import django.core
-import django.db
 from django.utils.safestring import mark_safe
+from django.db import models
 from sorl.thumbnail import get_thumbnail
 
 from catalog.validators import ValidateMustContain
 from core.models import CatalogAbstraction
 
 
-class Image(django.db.model.Model):
-    image = django.db.models.models.ImageField(
-        ("Изображение"),
-        upload_to="catalog/",
-        height_field=300,
-        width_field=300,
-        max_length=None
-    )
-
-    def get_image_300x300(self):
-        return get_thumbnail(self.image, "300", quality=51)
-
-    def image_tmb(self):
-        if self.image:
-            return mark_safe(
-                f"<img src='{self.image.url}' width=50>"
-            )
-        return "Нет изображения"
-
-    list_display = (
-        "image_tmb"
+def item_directory_path(instance, filename):
+    return (
+        f"catalog/{str(instance.item.id)[:3].zfill(3)}/{str(instance.item.id)}/{filename}"
     )
 
 
 class Tag(CatalogAbstraction):
-    slug = django.db.models.TextField(
+    slug = models.TextField(
         unique=True,
         verbose_name=("слаг"),
+        default=None,
         validators=[
             django.core.validators.MaxLengthValidator(200),
             django.core.validators.RegexValidator(regex=r"[-a-zA-Z\d_]+"),
@@ -47,7 +30,7 @@ class Tag(CatalogAbstraction):
 
 
 class Category(CatalogAbstraction):
-    slug = django.db.models.TextField(
+    slug = models.TextField(
         unique=True,
         verbose_name=("слаг"),
         validators=[
@@ -55,7 +38,7 @@ class Category(CatalogAbstraction):
             django.core.validators.RegexValidator(regex=r"[-a-zA-Z\d_]+"),
         ],
     )
-    weight = django.db.models.IntegerField(
+    weight = models.IntegerField(
         default=100,
         validators=[
             django.core.validators.MaxValueValidator(32767),
@@ -70,7 +53,7 @@ class Category(CatalogAbstraction):
 
 
 class Item(CatalogAbstraction):
-    text = django.db.models.TextField(
+    text = models.TextField(
         verbose_name=("текст"),
         help_text=(
             "Должно содержать по крайней мере одно слово "
@@ -78,33 +61,88 @@ class Item(CatalogAbstraction):
         ),
         validators=[ValidateMustContain("превосходно", "роскошно")],
     )
-    tags = django.db.models.ManyToManyField(Tag, verbose_name=("теги"))
-    category = django.db.models.ForeignKey(
+    tags = models.ManyToManyField(Tag, verbose_name=("теги"))
+    category = models.ForeignKey(
         "category",
-        on_delete=django.db.models.CASCADE,
-        related_name="item_category",
-        help_text="Выберите категорию",
-        verbose_name=("категория"),
-    )
-    main_image = django.db.models.ForeignKey(
-        "images",
-        on_delete=django.db.models.CASCADE,
-        related_name="item_main_image",
-        help_text="Загрузите изображение",
-        verbose_name=("главное изображение"),
-    )
-    images = django.db.models.ManyToManyField(
-        Image,
-        verbose_name=("изображения")
-    )
-    category = django.db.models.ForeignKey(
-        "category",
-        on_delete=django.db.models.CASCADE,
+        on_delete=models.CASCADE,
         related_name="item_category",
         help_text="Выберите категорию",
         verbose_name=("категория"),
     )
 
+    def image_tmb(self):
+        if self.main_image.image:
+            return mark_safe(
+                f"<img src='{self.main_image.get_image_50x50.url}'>"
+            )
+        return "Нет изображения"
+
     class Meta:
+
         verbose_name = "товар"
         verbose_name_plural = "товары"
+
+    image_tmb.short_description = "превью"
+    image_tmb.allow_tags = True
+
+
+class ImageBaseModel(models.Model):
+    image = models.ImageField(
+        "image",
+        upload_to=item_directory_path,
+        default=None,
+    )
+
+    @property
+    def get_image_300x300(self):
+        return get_thumbnail(
+            self.image,
+            "300x300",
+            crop="center",
+            quality=51,
+        )
+
+    @property
+    def get_image_50x50(self):
+        return get_thumbnail(
+            self.image,
+            "50x50",
+            crop="center",
+            quality=51,
+        )
+
+    def __str__(self):
+        return self.item.name
+
+    class Meta:
+        abstract = True
+
+
+class MainImage(ImageBaseModel):
+    item = models.OneToOneField(
+        "Item",
+        verbose_name=("Главное изображение"),
+        on_delete=models.CASCADE,
+        related_name="main_image",
+    )
+
+    list_display = (
+        "image_tmb"
+    )
+
+    class Meta:
+        verbose_name = "главное изображение"
+        verbose_name_plural = "главные изображения"
+
+
+class Image(ImageBaseModel):
+    item = models.ForeignKey(
+        "Item",
+        verbose_name=("item"),
+        on_delete=models.CASCADE,
+        related_name="images",
+    )
+
+    class Meta:
+        verbose_name = "фото"
+        verbose_name_plural = "фото"

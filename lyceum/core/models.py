@@ -9,7 +9,6 @@ ONLY_LETTERS_REGEX = re.compile(r"[^\w]")
 
 
 class CatalogAbstraction(django.db.models.Model):
-    id = django.db.models.BigAutoField(primary_key=True, verbose_name="id")
     is_published = django.db.models.BooleanField(
         default=True, verbose_name=("опубликовано")
     )
