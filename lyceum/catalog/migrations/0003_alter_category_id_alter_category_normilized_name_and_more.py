@@ -8,7 +8,10 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("catalog", "0001_squashed_0002_alter_category_normilized_name_and_more"),
+        (
+            "catalog",
+            "0001_squashed_0002_alter_category_normilized_name_and_more",
+        ),
     ]
 
     operations = [
@@ -16,7 +19,10 @@ class Migration(migrations.Migration):
             model_name="category",
             name="id",
             field=models.BigAutoField(
-                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                auto_created=True,
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
             ),
         ),
         migrations.AlterField(
@@ -33,7 +39,10 @@ class Migration(migrations.Migration):
             model_name="item",
             name="id",
             field=models.BigAutoField(
-                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                auto_created=True,
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
             ),
         ),
         migrations.AlterField(
@@ -50,7 +59,10 @@ class Migration(migrations.Migration):
             model_name="tag",
             name="id",
             field=models.BigAutoField(
-                auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                auto_created=True,
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
             ),
         ),
         migrations.AlterField(
@@ -71,7 +83,9 @@ class Migration(migrations.Migration):
                 unique=True,
                 validators=[
                     django.core.validators.MaxLengthValidator(200),
-                    django.core.validators.RegexValidator(regex="[-a-zA-Z\\d_]+"),
+                    django.core.validators.RegexValidator(
+                        regex="[-a-zA-Z\\d_]+"
+                    ),
                 ],
                 verbose_name="слаг",
             ),

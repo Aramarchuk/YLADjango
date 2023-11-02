@@ -1,16 +1,17 @@
 from django.contrib import admin
 from sorl.thumbnail.admin import AdminImageMixin
+
 import catalog.models
 
 
 class MainImageInline(AdminImageMixin, admin.TabularInline):
     model = catalog.models.MainImage
-    fields = ("image", )
+    fields = ("image",)
 
 
 class ImagesInline(AdminImageMixin, admin.TabularInline):
     model = catalog.models.Image
-    fields = ("image", )
+    fields = ("image",)
 
 
 @admin.register(catalog.models.Item)

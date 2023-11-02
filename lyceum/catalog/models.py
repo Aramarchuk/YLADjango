@@ -1,6 +1,6 @@
 import django.core
-from django.utils.safestring import mark_safe
 from django.db import models
+from django.utils.safestring import mark_safe
 from sorl.thumbnail import get_thumbnail
 
 from catalog.validators import ValidateMustContain
@@ -9,7 +9,8 @@ from core.models import CatalogAbstraction
 
 def item_directory_path(instance, filename):
     return (
-        f"catalog/{str(instance.item.id)[:3].zfill(3)}/{str(instance.item.id)}/{filename}"
+        f"catalog/{str(instance.item.id)[:3].zfill(3)}"
+        f"/{str(instance.item.id)}/{filename}"
     )
 
 
@@ -78,7 +79,6 @@ class Item(CatalogAbstraction):
         return "Нет изображения"
 
     class Meta:
-
         verbose_name = "товар"
         verbose_name_plural = "товары"
 
@@ -126,9 +126,7 @@ class MainImage(ImageBaseModel):
         related_name="main_image",
     )
 
-    list_display = (
-        "image_tmb"
-    )
+    list_display = "image_tmb"
 
     class Meta:
         verbose_name = "главное изображение"
