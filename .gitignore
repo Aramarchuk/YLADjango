@@ -161,4 +161,4 @@ cython_debug/
 #OTHER
 .vscode/
 .idea/
-lyceum/media/cache/
+cache/
