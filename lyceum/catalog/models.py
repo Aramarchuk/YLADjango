@@ -89,6 +89,7 @@ class Item(CatalogAbstraction):
         "category",
         on_delete=models.CASCADE,
         related_name="item_category",
+        related_query_name="item",
         help_text="Выберите категорию",
         verbose_name=("категория"),
     )

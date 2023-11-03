@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-  {% include "includes/item_card.html"%}
-  <img src="../../media/{{ item.main_image.image }}">
-  {% for image in item.images.all %}
-  <div>
-    <img src="../../media/{{ image.image }}">
-  </div>
-  {% endfor %}
+{{ item.name }}
+<img src="../../media/{{ item.main_image.image }}">
+{{ item.text }}
+{{ item.category.name }}
+{% for tag in item.tags.all %}
+  <p>{{ tag.name }}</p>
+{% endfor %}
+{% for image in item.images.all %}
+  <img src="../../media/{{ image.image }}">
+{% endfor %}
 {% endblock %}
