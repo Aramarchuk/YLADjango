@@ -13,7 +13,8 @@ ONLY_LETTERS_REGEX = re.compile(r"[^\w]")
 
 class CatalogAbstraction(django.db.models.Model):
     is_published = django.db.models.BooleanField(
-        default=True, verbose_name=("опубликовано"),
+        default=True,
+        verbose_name=("опубликовано"),
     )
     name = django.db.models.CharField(
         unique=True,
@@ -31,7 +32,8 @@ class CatalogAbstraction(django.db.models.Model):
     def _generate_normilized_name(self):
         try:
             translitereted = transliterate.translit(
-                self.name.lower(), reversed=True,
+                self.name.lower(),
+                reversed=True,
             )
         except transliterate.exceptions.LanguageDetectionError:
             translitereted = self.name.lower()

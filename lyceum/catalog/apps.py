@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-__all__ = ("CatalogConfig", )
+__all__ = ("CatalogConfig",)
 
 
 class CatalogConfig(AppConfig):

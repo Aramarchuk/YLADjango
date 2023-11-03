@@ -53,9 +53,10 @@ class StaticModelTests(TestCase):
             slug="test-category-slug",
             weight=100,
         )
-        print(cls.category)
         cls.tag = models.Tag.objects.create(
-            is_published=True, name="Тестовый тег", slug="test-tag-slug",
+            is_published=True,
+            name="Тестовый тег",
+            slug="test-tag-slug",
         )
 
     @parameterized.expand(

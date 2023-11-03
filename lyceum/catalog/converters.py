@@ -1,4 +1,4 @@
-__all__ = ("PositiveInt", )
+__all__ = ("PositiveInt",)
 
 
 class PositiveInt:

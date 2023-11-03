@@ -29,12 +29,12 @@ class SimpleMiddleware:
             unchanged_content = response.content.decode()
             out_con = ""
             end_index = 0
-            for iter in re.finditer(r"[а-яА-ЯёЁ]+", unchanged_content):
+            for match_iter in re.finditer(r"[а-яА-ЯёЁ]+", unchanged_content):
                 out_con += unchanged_content[
-                    end_index : iter.start()  # noqa E203
+                    end_index : match_iter.start()  # noqa E203
                 ]
-                out_con += iter[0][::-1]
-                end_index = iter.end()
+                out_con += match_iter[0][::-1]
+                end_index = match_iter.end()
             out_con += unchanged_content[end_index:]
             out_con = out_con.encode()
             response.content = out_con

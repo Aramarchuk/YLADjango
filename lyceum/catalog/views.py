@@ -10,7 +10,6 @@ __all__ = ()
 def item_list(request):
     template = "catalog/catalog.html"
     context = {"items": list(Item.objects.all())}
-    print(context)
     return render(request, template, context)
 
 
