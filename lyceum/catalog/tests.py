@@ -138,9 +138,15 @@ class ContextTests(TestCase):
         cls.published_item.tags.add(cls.unpublished_tag)
 
     def test_home_context_positive(self):
-        response = Client().get(django.urls.reverse("homepage:home"))
+        response = Client().get(django.urls.reverse("catalog:item_list"))
         self.assertIn("items", response.context)
 
     def test_home_context_count(self):
-        response = Client().get(django.urls.reverse("homepage:home"))
+        response = Client().get(django.urls.reverse("catalog:item_list"))
         self.assertEqual(response.context["items"].count(), 1)
+
+    def test_home_context_type(self):
+        response = Client().get(
+            django.urls.reverse("catalog:item_detail", args=[1]),
+        )
+        self.assertEqual(type(response.context["item"]), models.Item)

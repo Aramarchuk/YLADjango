@@ -80,6 +80,7 @@
       "normilized_name": "ksp",
       "text": "Тот самый кот, которому роскошно положили цветок петуньи на голову.", 
       "category": 1,
+      "is_on_main": false,
       "tags": [
         1,
         2
@@ -95,6 +96,7 @@
       "normilized_name": "kotboris",
       "text": "Превосходно сыгравший в рекламе корма",
       "category": 1,
+      "is_on_main": false,
       "tags": [
         1,
         2,
@@ -111,6 +113,7 @@
       "normilized_name": "doge",
       "text": "Превосходно служивший нам сиба-ину по кличке Кабосу, недавно покинул наш мир. Вечная роскошная память.",
       "category": 2,
+      "is_on_main": false,
       "tags": [
         1,
         2,
@@ -127,6 +130,7 @@
       "normilized_name": "kakaya-tosobaka",
       "text": "На улице сегодня видел. Роскошно.",
       "category": 2,
+      "is_on_main": false,
       "tags": [
         1,
         5
@@ -142,6 +146,7 @@
       "normilized_name": "bagovanniykot",
       "text": "Живёт роскошно, пока я работаю над этим проектом.",
       "category": 1,
+      "is_on_main": false,
       "tags": [
         5
       ]
@@ -153,6 +158,14 @@
     "fields": {
       "image": "catalog/001/1/wtf.png",
       "item": 1
+    }
+  },
+  {
+    "model": "catalog.mainimage",
+    "pk": 2,
+    "fields": {
+      "image": "catalog/002/2/PFxodM4WvLQ.png",
+      "item": 2
     }
   },
   {
