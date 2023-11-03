@@ -6,19 +6,19 @@ flake8:
   stage: linting
   image: registry.gitlab.com/pipeline-components/flake8:latest
   script:
-    - pip install -r requirements/test.txt
+    - pip3 install -r requirements/test.txt
     - flake8 --verbose .
   
 black:
   stage: linting
   image: registry.gitlab.com/pipeline-components/black:latest
   script: 
-    - pip install -r requirements/test.txt
+    - pip3 install -r requirements/test.txt
     - black --check --verbose --diff --line-length 79 .
 
 django-test:
   stage: testing
   script:
-    - pip install -r requirements/test.txt
+    - pip3 install -r requirements/test.txt
     - cd lyceum
     - python3 manage.py test

@@ -162,3 +162,8 @@ cython_debug/
 .vscode/
 .idea/
 cache/
+cache
+.cache
+.pytest_cache/
+.webassets-cache
+.mypy_cache/
