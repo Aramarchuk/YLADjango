@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% comment %} {% block title %}Список товаров {%endblock%} {% endcomment %}
 {% block content %}
-    <h1>Список товаров</h1>
-    <p>Он пуст</p>
+{% for item in items %}
+<div>
+  
+  {% include "includes/item_card.html"%}
+
+</div>
+{% endfor %}
 {% endblock %}

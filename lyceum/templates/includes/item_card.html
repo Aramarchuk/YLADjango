@@ -1,0 +1,9 @@
+{% load static %}
+<div class="container">
+  <h1>{{ item.name }}</h1>
+  <p>{{ item.category.name }}</p>
+  <p>{{ item.text|truncatewords_html:10|striptags|safe }}</p>
+  {% for tag in item.tags.all %}
+    <p>{{ tag.name }}</p>
+  {% endfor %}
+</div>

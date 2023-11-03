@@ -55,7 +55,23 @@ class Category(CatalogAbstraction):
         verbose_name_plural = "категории"
 
 
+class ItemManager(models.Manager):
+    def published(self):
+        return (
+            self.get_queryset()
+            .filter(is_published=True)
+            .select_related("category")
+            .order_by("name")
+            .prefetch_related(
+                models.Prefetch("tags", queryset=Tag.objects.all()),
+            )
+            .only("name", "text", "category__name")
+        )
+
+
 class Item(CatalogAbstraction):
+    objects = ItemManager()
+
     text = models.TextField(
         verbose_name=("текст"),
         help_text=(
@@ -76,6 +92,10 @@ class Item(CatalogAbstraction):
         help_text="Выберите категорию",
         verbose_name=("категория"),
     )
+    is_on_main = models.BooleanField(
+        default=False,
+        verbose_name=("на главной"),
+    )
 
     def image_tmb(self):
         if self.main_image.image:
@@ -90,6 +110,9 @@ class Item(CatalogAbstraction):
 
     image_tmb.short_description = "превью"
     image_tmb.allow_tags = True
+
+    def __str__(self):
+        return self.name[:15]
 
 
 class ImageBaseModel(models.Model):
