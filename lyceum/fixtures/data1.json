@@ -1,0 +1,140 @@
+[
+{
+  "model": "catalog.category",
+  "pk": 1,
+  "fields": {
+    "name": "wwwww",
+    "is_published": true,
+    "slug": "wwwwww",
+    "weight": 100
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 2,
+  "fields": {
+    "name": "ppppp",
+    "is_published": false,
+    "slug": "ppppp",
+    "weight": 102
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 1,
+  "fields": {
+    "name": "тег 1",
+    "is_published": true,
+    "slug": "tag-1"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 2,
+  "fields": {
+    "name": "тег 2",
+    "is_published": false,
+    "slug": "tag-2"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 3,
+  "fields": {
+    "name": "тег 3",
+    "is_published": true,
+    "slug": "tag-3"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 4,
+  "fields": {
+    "name": "тег 4",
+    "is_published": true,
+    "slug": "tag-4"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 5,
+  "fields": {
+    "name": "тег 5",
+    "is_published": false,
+    "slug": "tag-5"
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 1,
+  "fields": {
+    "name": "товар 1",
+    "is_published": true,
+    "category": 1,
+    "text": "роскошно!",
+    "tags": [
+      1,
+      5
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 2,
+  "fields": {
+    "name": "товар 2",
+    "is_published": true,
+    "category": 2,
+    "text": "роскошно",
+    "tags": [
+      1,
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 3,
+  "fields": {
+    "name": "товар 3",
+    "is_published": true,
+    "category": 2,
+    "text": "роскошно",
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 4,
+  "fields": {
+    "name": "товар 4",
+    "is_published": true,
+    "category": 1,
+    "text": "роскошно",
+    "tags": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 5,
+  "fields": {
+    "name": "товар 5",
+    "is_published": true,
+    "category": 2,
+    "text": "роскошно",
+    "tags": [
+      1,
+      5
+    ]
+  }
+}
+]

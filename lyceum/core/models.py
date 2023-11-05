@@ -1,14 +1,9 @@
-import re
-
 from django.core.exceptions import ValidationError
 import django.db
 import transliterate
 
 
 __all__ = ()
-
-
-ONLY_LETTERS_REGEX = re.compile(r"[^\w]")
 
 
 class CatalogAbstraction(django.db.models.Model):
@@ -37,7 +32,6 @@ class CatalogAbstraction(django.db.models.Model):
             )
         except transliterate.exceptions.LanguageDetectionError:
             translitereted = self.name.lower()
-
         return translitereted
 
     def save(self, *args, **kwargs):

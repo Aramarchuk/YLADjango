@@ -1,5 +1,6 @@
 import django.core
 from django.db import models
+from django.db.models.signals import pre_save
 from django.utils.safestring import mark_safe
 from sorl.thumbnail import get_thumbnail
 
@@ -174,3 +175,14 @@ class Image(ImageBaseModel):
     class Meta:
         verbose_name = "фото"
         verbose_name_plural = "фото"
+
+
+def pre_save_for_fixtures(**kwargs):
+    kwargs["instance"].normilized_name = kwargs[
+        "instance"
+    ]._generate_normilized_name()
+
+
+pre_save.connect(pre_save_for_fixtures, sender=Category)
+pre_save.connect(pre_save_for_fixtures, sender=Tag)
+pre_save.connect(pre_save_for_fixtures, sender=Item)
