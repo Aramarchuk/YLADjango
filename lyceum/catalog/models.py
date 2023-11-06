@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 import django.core
 from django.db import models
 from django.db.models.signals import pre_save
@@ -121,7 +122,8 @@ class ItemManager(models.Manager):
 class Item(CatalogAbstraction):
     objects = ItemManager()
 
-    text = models.TextField(
+    text = RichTextField(
+        config_name="item_ckeditor",
         verbose_name=("текст"),
         help_text=(
             "Должно содержать по крайней мере одно слово "

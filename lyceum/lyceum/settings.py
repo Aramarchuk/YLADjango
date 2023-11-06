@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "ckeditor",
     "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",
     "about.apps.AboutConfig",
@@ -155,3 +156,19 @@ MEDIA_URL = "/media/"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    "item_ckeditor": {
+        "toolbar": "Custom",
+        "toolbar_Custom": [
+            ["Bold", "Italic", "Underline"],
+            ["NumberedList", "BulletedList", "-", "Outdent", "Indent", "-",
+             "JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock"],
+            ["Link", "Unlink"],
+            ["RemoveFormat", "Source"],
+        ],
+        "height": 600,
+        "width": 800,
+    },
+}

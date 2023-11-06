@@ -2,13 +2,15 @@
 {% load static %}
 {% block content %}
 {{ item.name }}
-<img src="../../media/{{ item.main_image.image }}">
+<div>
+<img src="{{ item.main_image.get_image_300x300.url }}">
+</div>
 {{ item.text }}
 {{ item.category.name }}
 {% for tag in item.tags.all %}
   <p>{{ tag.name }}</p>
 {% endfor %}
 {% for image in item.images.all %}
-  <img src="../../media/{{ image.image }}">
+  <img src="{{ image.get_image_300x300.url }}">
 {% endfor %}
 {% endblock %}
