@@ -18,7 +18,24 @@ def item_directory_path(instance, filename):
     )
 
 
+class TagManager(models.Manager):
+    def published(self):
+        return (
+                self.get_queryset()
+                .filter(
+                    is_published=True,
+                )
+                .order_by(
+                    "name",
+                )
+                .only("name")
+            )
+
+
 class Tag(CatalogAbstraction):
+
+    objects = TagManager()
+
     slug = models.TextField(
         unique=True,
         verbose_name=("слаг"),
@@ -60,19 +77,44 @@ class ItemManager(models.Manager):
     def published(self):
         return (
             self.get_queryset()
-            .filter(is_published=True)
-            .select_related("category")
-            .filter(category__is_published=True)
-            .order_by("name")
+            .filter(
+                is_published=True,
+                category__is_published=True,
+            )
+            .order_by(
+                "category__name",
+                "name",
+            )
+            .select_related(
+                "category",
+                "main_image",
+            )
             .prefetch_related(
                 models.Prefetch(
                     "tags",
-                    queryset=Tag.objects.filter(is_published=True).only(
+                    queryset=Tag.objects.published().only(
                         "name",
                     ),
                 ),
             )
-            .only("name", "text", "category__name")
+            .only(
+                "name",
+                "text",
+                "main_image__image",
+                "category__name",
+                "tags__name",
+            )
+        )
+
+    def on_main(self):
+        return (
+            self.published()
+            .filter(
+                is_on_main=True,
+            )
+            .order_by(
+                "name",
+            )
         )
 
 

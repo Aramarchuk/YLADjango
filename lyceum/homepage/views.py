@@ -10,9 +10,7 @@ __all__ = ()
 def home(request):
     template = "homepage/home.html"
     context = {
-        "items": catalog.models.Item.objects.published().filter(
-            is_on_main=True,
-        ),
+        "items": catalog.models.Item.objects.on_main(),
     }
     return render(request, template, context)
 

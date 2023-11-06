@@ -3,7 +3,13 @@
 {% block content %}
 {% for item in items %}
 <div>
-  
+  {% ifchanged %}
+  <div class="row">
+    <div class="col-12 text-center">
+      <h1>{{ item.category.name }} </h1>
+    </div>
+  </div>
+  {% endifchanged %}
   {% include "includes/item_card.html"%}
 
 </div>
