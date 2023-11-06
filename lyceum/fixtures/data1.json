@@ -129,6 +129,7 @@
   "fields": {
     "name": "товар 5",
     "is_published": true,
+    "is_on_main": true,
     "category": 2,
     "text": "роскошно",
     "tags": [

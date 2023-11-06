@@ -1,7 +1,8 @@
+from django.db import models
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 
-from catalog.models import Item
+from catalog.models import Image, Item
 
 
 __all__ = ()
@@ -16,7 +17,13 @@ def item_list(request):
 def item_detail(request, item_n):
     template = "catalog/detail.html"
     item = get_object_or_404(
-        Item.objects.published(),
+        Item.objects.published()
+        .select_related("main_image")
+        .prefetch_related(
+            models.Prefetch(
+                "images", queryset=Image.objects.all().only("image"),
+            ),
+        ),
         pk=item_n,
     )
     context = {"item": item}

@@ -62,9 +62,15 @@ class ItemManager(models.Manager):
             self.get_queryset()
             .filter(is_published=True)
             .select_related("category")
+            .filter(category__is_published=True)
             .order_by("name")
             .prefetch_related(
-                models.Prefetch("tags", queryset=Tag.objects.all()),
+                models.Prefetch(
+                    "tags",
+                    queryset=Tag.objects.filter(is_published=True).only(
+                        "name",
+                    ),
+                ),
             )
             .only("name", "text", "category__name")
         )
