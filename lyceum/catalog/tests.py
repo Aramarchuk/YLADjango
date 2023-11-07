@@ -89,16 +89,28 @@ class StaticModelTests(TestCase):
 class ContextTests(TestCase):
     fixtures = ["fixtures/data1.json"]
 
-    def test_home_context_positive(self):
+    def test_catalog_context_positive(self):
         response = Client().get(django.urls.reverse("catalog:item_list"))
         self.assertIn("items", response.context)
 
-    def test_home_context_count(self):
+    def test_catalog_context_count(self):
         response = Client().get(django.urls.reverse("catalog:item_list"))
-        self.assertEqual(response.context["items"].count(), 3)
+        self.assertEqual(len(response.context["items"]), 3)
 
-    def test_home_context_type(self):
+    def test_catalog_context_type(self):
         response = Client().get(
             django.urls.reverse("catalog:item_detail", args=[1]),
         )
-        self.assertEqual(type(response.context["item"]), models.Item)
+        self.assertTrue(isinstance(response.context["item"], models.Item))
+
+    def test_catalog_types_context(self):
+        response = Client().get(django.urls.reverse("catalog:item_list"))
+        self.assertTrue(
+            all(
+                isinstance(
+                    item,
+                    models.Item,
+                )
+                for item in response.context["items"]
+            ),
+        )

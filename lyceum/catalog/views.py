@@ -30,7 +30,6 @@ def item_detail(request, item_n):
         ),
         pk=item_n,
     )
-    print(type(item))
     context = {"item": item}
     return render(request, template, context)
 

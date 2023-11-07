@@ -3,7 +3,7 @@ from http import HTTPStatus
 from django.test import Client, override_settings, TestCase
 import django.urls
 
-# from catalog import models
+from catalog import models
 
 
 __all__ = ()
@@ -37,3 +37,15 @@ class ContextTests(TestCase):
     def test_home_context_count(self):
         response = Client().get(django.urls.reverse("homepage:home"))
         self.assertEqual(response.context["items"].count(), 1)
+
+    def test_home_types_context(self):
+        response = Client().get(django.urls.reverse("homepage:home"))
+        self.assertTrue(
+            all(
+                isinstance(
+                    item,
+                    models.Item,
+                )
+                for item in response.context["items"]
+            ),
+        )
