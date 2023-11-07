@@ -1,4 +1,5 @@
 from django import forms
+from django.core import validators
 
 from feedback.models import Feedback
 
@@ -26,4 +27,7 @@ class FeedbackForm(forms.ModelForm):
         widgets = {
             "text": forms.TextInput(),
             "mail": forms.EmailInput(),
+        }
+        validators = {
+            "mail": validators.EmailValidator(message="Некорректная почта"),
         }

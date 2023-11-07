@@ -22,12 +22,11 @@ def feedback(request):
             "Обратная связь получена",
             text,
             settings.DJANGO_MAIL,
-            list(mail_to),
+            [mail_to],
             fail_silently=False,
         )
-        messages.add_message(
+        messages.success(
             request,
-            messages.SUCCESS,
             "Письмо успешно отправлено!",
         )
         return redirect("feedback:feedback")

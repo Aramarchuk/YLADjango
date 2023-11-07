@@ -26,7 +26,7 @@ class SimpleMiddleware:
         response = self.get_response(request)
 
         if self.check_reverse():
-            unchanged_content = response.content.decode()
+            unchanged_content = response.content.decode("utf-8")
             out_con = ""
             end_index = 0
             for match_iter in re.finditer(r"[а-яА-ЯёЁ]+", unchanged_content):

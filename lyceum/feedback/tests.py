@@ -42,3 +42,23 @@ class FormTest(TestCase):
             response,
             django.urls.reverse("feedback:feedback"),
         )
+
+    def test_feedback_valid_form(self):
+        data = {
+            "text": "Тестовый Текст",
+            "mail": "example@gmail.com",
+        }
+
+        self.assertTrue(FeedbackForm(data).is_valid())
+
+    def test_feedback_invalid_email(self):
+        data = {
+            "text": "Тестовый Текст",
+            "mail": "example@gmail.com",
+        }
+        form = FeedbackForm(data)
+        self.assertIn(
+            "Некорректная почта",
+            form.errors["mail"],
+        )
+        self.assertFalse(form.is_valid())
