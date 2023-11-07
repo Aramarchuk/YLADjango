@@ -5,4 +5,4 @@ __all__ = ()
 
 
 class EchoForm(forms.Form):
-    text = forms.TextInput()
+    text = forms.CharField()

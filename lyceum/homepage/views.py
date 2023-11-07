@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render
 
 import catalog.models
@@ -22,11 +22,18 @@ def coffee(request):
 
 def echo(request):
     template = "homepage/echo.html"
-    context = {}
-    return render(request, template, context)
+    context = {"echo_form": EchoForm()}
+    if request.method == "GET":
+        return render(request, template, context)
+    return HttpResponseNotAllowed(["POST"])
 
 
 def echo_submit(request):
     form = EchoForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
-        return HttpResponse(form.cleaned_data.get("text"))
+        return HttpResponse(
+            form.cleaned_data.get("text"),
+            content_type="text/plain",
+            charset="utf-8",
+        )
+    return HttpResponseNotAllowed(["POST"])

@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 from django.test import Client, override_settings, TestCase
 from parameterized import parameterized
 
-from .middleware import SimpleMiddleware
+from lyceum.middleware import SimpleMiddleware
 
 
 __all__ = ()

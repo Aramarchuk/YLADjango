@@ -8,5 +8,5 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("coffee/", views.coffee),
     path("echo/", views.echo, name="echo"),
-    path("echo/submit", views.echo_submit, name="echo_submit"),
+    path("echo/submit/", views.echo_submit, name="echo_submit"),
 ]

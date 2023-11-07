@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
 
@@ -23,6 +24,11 @@ def feedback(request):
             settings.DJANGO_MAIL,
             list(mail_to),
             fail_silently=False,
+        )
+        messages.add_message(
+            request,
+            messages.SUCCESS,
+            "Письмо успешно отправлено!",
         )
         return redirect("feedback:feedback")
 

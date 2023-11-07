@@ -14,7 +14,7 @@ class FeedbackForm(forms.ModelForm):
 
     class Meta:
         model = Feedback
-        fields = ("text", "mail")
+        exclude = ["created_on"]
 
         labels = {
             "text": "Текст",
