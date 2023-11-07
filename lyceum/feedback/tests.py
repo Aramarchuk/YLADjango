@@ -54,11 +54,11 @@ class FormTest(TestCase):
     def test_feedback_invalid_email(self):
         data = {
             "text": "Тестовый Текст",
-            "mail": "example@gmail.com",
+            "mail": "examplegmail.com",
         }
         form = FeedbackForm(data)
+        self.assertFalse(form.is_valid())
         self.assertIn(
-            "Некорректная почта",
+            "Введите правильный адрес электронной почты.",
             form.errors["mail"],
         )
-        self.assertFalse(form.is_valid())

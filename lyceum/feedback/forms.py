@@ -29,5 +29,8 @@ class FeedbackForm(forms.ModelForm):
             "mail": forms.EmailInput(),
         }
         validators = {
-            "mail": validators.EmailValidator(message="Некорректная почта"),
+            "mail": validators.EmailValidator(
+                message="Некорректная почта",
+                code=1,
+            ),
         }
