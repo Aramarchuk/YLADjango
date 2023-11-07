@@ -47,6 +47,8 @@ ALLOW_REVERSE = os.getenv("DJANGO_ALLOW_REVERSE", "True") in [
     "y",
 ]
 
+DJANGO_MAIL = os.getenv("DJANGO_MAIL")
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -59,6 +61,7 @@ INSTALLED_APPS = [
     "django_cleanup.apps.CleanupConfig",
     "about.apps.AboutConfig",
     "catalog.apps.CatalogConfig",
+    "feedback.apps.FeedbackConfig",
     "homepage.apps.HomepageConfig",
 ]
 
@@ -182,3 +185,7 @@ CKEDITOR_CONFIGS = {
         "width": 800,
     },
 }
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+
+EMAIL_FILE_PATH = BASE_DIR / "send_mail"

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Обратная связь</h1>
+<form method="post">
+    {% csrf_token %}
+    <ul>
+        {{ feedback_form.as_ul }}
+    </ul>
+    <input type="submit" value="Отправить">
+</form>
+<form method="get">
+  <h2>Обратная связь успешно отправлена!</h2>
+</form>
+{% endblock content %}
