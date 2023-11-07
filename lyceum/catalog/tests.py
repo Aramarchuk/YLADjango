@@ -93,15 +93,15 @@ class ContextTests(TestCase):
         response = Client().get(django.urls.reverse("catalog:item_list"))
         self.assertIn("items", response.context)
 
-    def test_catalog_context_count(self):
+    def test_catalog_items_size(self):
         response = Client().get(django.urls.reverse("catalog:item_list"))
         self.assertEqual(len(response.context["items"]), 3)
 
-    def test_catalog_context_type(self):
+    def test_item_type(self):
         response = Client().get(
             django.urls.reverse("catalog:item_detail", args=[1]),
         )
-        self.assertTrue(isinstance(response.context["item"], models.Item))
+        self.assertIsInstance(response.context["item"], models.Item)
 
     def test_catalog_context_detail(self):
         response = Client().get(
@@ -109,7 +109,7 @@ class ContextTests(TestCase):
         )
         self.assertIn("item", response.context)
 
-    def test_catalog_types_context(self):
+    def test_catalog_items_types(self):
         response = Client().get(django.urls.reverse("catalog:item_list"))
         self.assertTrue(
             all(
@@ -156,7 +156,7 @@ class CheckSQLOptinization(TestCase):
                 ("tags",),
                 (
                     "is_on_main",
-                    "image",
+                    "main_image",
                     "images",
                     "is_published",
                 ),
@@ -177,7 +177,7 @@ class CheckSQLOptinization(TestCase):
             ("tags",),
             (
                 "is_on_main",
-                "image",
+                "main_image",
                 "images",
                 "is_published",
             ),
