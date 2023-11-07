@@ -114,3 +114,42 @@ class ContextTests(TestCase):
                 for item in response.context["items"]
             ),
         )
+
+
+class CheckSQLOptinization(TestCase):
+    def check_content_value(
+        self,
+        item,
+        exists,
+        prefetched,
+        not_loaded,
+    ):
+        check_dict = item.__dict__
+
+        for value in exists:
+            self.assertIn(value, check_dict)
+
+        for value in prefetched:
+            self.assertIn(value, check_dict["_prefetched_object_cache"])
+
+        for value in not_loaded:
+            self.assertNotIn(value, check_dict)
+
+    def test_loaded_value(self):
+        response = Client().get(django.urls.reverse("catalog:item_list"))
+        for item in response.context["items"]:
+            self.check_content_value(
+                item,
+                (
+                    "name",
+                    "text",
+                    "category_id",
+                ),
+                ("tags",),
+                (
+                    "is_on_main",
+                    "image",
+                    "images",
+                    "is_published",
+                ),
+            )
