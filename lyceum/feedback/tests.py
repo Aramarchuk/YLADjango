@@ -62,3 +62,12 @@ class FormTest(TestCase):
             "Введите правильный адрес электронной почты.",
             form.errors["mail"],
         )
+    
+    def test_feedback_empty(self):
+        data = {
+            "text": "",
+            "mail": "",
+        }
+        form = FeedbackForm(data)
+        self.assertFalse(form.is_valid())
+        self.assertTrue(form.has_error("mail"))
