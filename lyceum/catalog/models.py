@@ -22,19 +22,18 @@ def item_directory_path(instance, filename):
 class TagManager(models.Manager):
     def published(self):
         return (
-                self.get_queryset()
-                .filter(
-                    is_published=True,
-                )
-                .order_by(
-                    "name",
-                )
-                .only("name")
+            self.get_queryset()
+            .filter(
+                is_published=True,
             )
+            .order_by(
+                "name",
+            )
+            .only("name")
+        )
 
 
 class Tag(CatalogAbstraction):
-
     objects = TagManager()
 
     slug = models.TextField(

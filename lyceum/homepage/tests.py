@@ -28,7 +28,7 @@ class StaticUrlTests(TestCase):
 
 
 class ContextTests(TestCase):
-    fixtures = ["data1.json"]
+    fixtures = ["fixtures/data1.json"]
 
     def test_home_context_positive(self):
         response = Client().get(django.urls.reverse("homepage:home"))

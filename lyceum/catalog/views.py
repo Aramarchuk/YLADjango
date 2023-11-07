@@ -10,9 +10,7 @@ __all__ = ()
 
 def item_list(request):
     template = "catalog/catalog.html"
-    context = {"items": Item.objects
-               .published()
-               .order_by("category__name")}
+    context = {"items": Item.objects.published().order_by("category__name")}
     return render(request, template, context)
 
 
@@ -24,8 +22,7 @@ def item_detail(request, item_n):
         .prefetch_related(
             models.Prefetch(
                 Item.images.field.related_query_name(),
-                queryset=Image.objects.all()
-                .only(
+                queryset=Image.objects.all().only(
                     Image.image.field.name,
                     Image.item.field.name,
                 ),
@@ -33,6 +30,7 @@ def item_detail(request, item_n):
         ),
         pk=item_n,
     )
+    print(type(item))
     context = {"item": item}
     return render(request, template, context)
 

@@ -17,7 +17,9 @@ class Migration(migrations.Migration):
             field=ckeditor.fields.RichTextField(
                 help_text="Должно содержать по крайней мере одно слово 'Превосходно' или 'Роскошно'",
                 validators=[
-                    catalog.validators.ValidateMustContain("превосходно", "роскошно")
+                    catalog.validators.ValidateMustContain(
+                        "превосходно", "роскошно"
+                    )
                 ],
                 verbose_name="текст",
             ),
