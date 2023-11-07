@@ -103,6 +103,12 @@ class ContextTests(TestCase):
         )
         self.assertTrue(isinstance(response.context["item"], models.Item))
 
+    def test_catalog_context_detail(self):
+        response = Client().get(
+            django.urls.reverse("catalog:item_detail", args=[1]),
+        )
+        self.assertIn("item", response.context)
+
     def test_catalog_types_context(self):
         response = Client().get(django.urls.reverse("catalog:item_list"))
         self.assertTrue(
@@ -117,6 +123,8 @@ class ContextTests(TestCase):
 
 
 class CheckSQLOptinization(TestCase):
+    fixtures = ["fixtures/data1.json"]
+
     def check_content_value(
         self,
         item,
@@ -130,12 +138,12 @@ class CheckSQLOptinization(TestCase):
             self.assertIn(value, check_dict)
 
         for value in prefetched:
-            self.assertIn(value, check_dict["_prefetched_object_cache"])
+            self.assertIn(value, check_dict["_prefetched_objects_cache"])
 
         for value in not_loaded:
             self.assertNotIn(value, check_dict)
 
-    def test_loaded_value(self):
+    def test_loaded_value_list(self):
         response = Client().get(django.urls.reverse("catalog:item_list"))
         for item in response.context["items"]:
             self.check_content_value(
@@ -153,3 +161,30 @@ class CheckSQLOptinization(TestCase):
                     "is_published",
                 ),
             )
+
+    def test_loaded_value_detail(self):
+        response = Client().get(
+            django.urls.reverse("catalog:item_detail", args=[1]),
+        )
+        item = response.context["item"]
+        self.check_content_value(
+            item,
+            (
+                "name",
+                "text",
+                "category_id",
+            ),
+            ("tags",),
+            (
+                "is_on_main",
+                "image",
+                "images",
+                "is_published",
+            ),
+        )
+        self.check_content_value(
+            item.tags.all()[0],
+            ("name",),
+            (),
+            ("is_published",),
+        )
