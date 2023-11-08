@@ -36,4 +36,4 @@ def echo_submit(request):
             content_type="text/plain",
             charset="utf-8",
         )
-    return HttpResponseNotAllowed(["POST"])
+    return HttpResponseNotAllowed(["GET"])
