@@ -22,22 +22,28 @@ class SimpleMiddleware:
             return True
         return False
 
+    def reverse_russian_words(self, text):
+        unchanged_content = text
+        out_con = ""
+        end_index = 0
+        for match_iter in re.finditer(
+            r"\b[а-яА-ЯёЁ]+\b",
+            unchanged_content,
+        ):
+            out_con += unchanged_content[
+                end_index : match_iter.start()  # noqa E203
+            ]
+            out_con += match_iter[0][::-1]
+            end_index = match_iter.end()
+        out_con += unchanged_content[end_index:]
+        return out_con
+
     def __call__(self, request):
         response = self.get_response(request)
 
         if self.check_reverse():
-            unchanged_content = response.content.decode("utf-8")
-            out_con = ""
-            end_index = 0
-            for match_iter in re.finditer(
-                r"\b[а-яА-ЯёЁ]+\b",
-                unchanged_content,
-            ):
-                out_con += unchanged_content[
-                    end_index : match_iter.start()  # noqa E203
-                ]
-                out_con += match_iter[0][::-1]
-                end_index = match_iter.end()
-            out_con += unchanged_content[end_index:]
-            response.content = out_con
+            response.content = self.reverse_russian_words(
+                response.content.decode("utf-8"),
+            )
+
         return response

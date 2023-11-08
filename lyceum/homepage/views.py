@@ -35,6 +35,6 @@ def echo_submit(request):
             text = form.cleaned_data["text"]
             return HttpResponse(
                 text,
-                content_type="text/plain charset=utf-8",
+                content_type="text/plain charset=UTF-8",
             )
     return HttpResponseNotAllowed(["POST"])
