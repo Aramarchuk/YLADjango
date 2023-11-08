@@ -29,14 +29,12 @@ def echo(request):
 
 
 def echo_submit(request):
-
     if request.method == "POST":
         form = EchoForm(request.POST)
         if form.is_valid():
             text = form.cleaned_data["text"]
             return HttpResponse(
                 text,
-                content_type="text/plain",
-                charset="utf-8",
+                content_type="text/plain charset=utf-8",
             )
     return HttpResponseNotAllowed(["POST"])

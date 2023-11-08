@@ -39,6 +39,5 @@ class SimpleMiddleware:
                 out_con += match_iter[0][::-1]
                 end_index = match_iter.end()
             out_con += unchanged_content[end_index:]
-            out_con = out_con.encode("utf-8")
             response.content = out_con
         return response
