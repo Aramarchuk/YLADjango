@@ -33,7 +33,7 @@ def echo_submit(request):
     if request.method == "POST" and form.is_valid():
         return HttpResponse(
             form.cleaned_data.get("text"),
-            content_type="text/plain",
+            content_type="text/plain charset=utf-8",
             charset="utf-8",
         )
     return HttpResponseNotAllowed(["GET"])

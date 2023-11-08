@@ -26,7 +26,7 @@ class StaticUrlTests(TestCase):
 
         middleware = SimpleMiddleware(get_response)
         responses = tuple(
-            middleware(request).content for _ in range(10)
+            middleware(request).content.decode("utf-8") for _ in range(10)
         )
 
         self.assertIn(excepted, responses)
@@ -45,7 +45,7 @@ class StaticUrlTests(TestCase):
 
         middleware = SimpleMiddleware(get_response)
         responses = tuple(
-            middleware(request).content for _ in range(10)
+            middleware(request).content.decode("utf-8") for _ in range(10)
         )
 
         self.assertNotIn(excepted, responses)
