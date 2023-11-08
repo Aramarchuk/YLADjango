@@ -158,6 +158,8 @@ MEDIA_URL = "/media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+DEFAULT_CHARSET = "utf-8"
+
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
     "item_ckeditor": {
