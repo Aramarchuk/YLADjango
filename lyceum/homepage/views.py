@@ -21,20 +21,22 @@ def coffee(request):
 
 
 def echo(request):
-    template = "homepage/echo.html"
-    context = {"echo_form": EchoForm()}
     if request.method == "GET":
+        template = "homepage/echo.html"
+        context = {"echo_form": EchoForm()}
         return render(request, template, context)
     return HttpResponseNotAllowed(["POST"])
 
 
 def echo_submit(request):
-    form = EchoForm(request.POST)
-    print(form.cleaned_data["text"])
-    if request.method == "POST" and form.is_valid():
-        return HttpResponse(
-            form.cleaned_data["text"],
-            content_type="text/plain",
-            charset="utf-8",
-        )
-    return HttpResponseNotAllowed(["GET"])
+
+    if request.method == "POST":
+        form = EchoForm(request.POST)
+        if form.is_valid():
+            text = form.cleaned_data["text"]
+            return HttpResponse(
+                text,
+                content_type="text/plain",
+                charset="utf-8",
+            )
+    return HttpResponseNotAllowed(["POST"])
