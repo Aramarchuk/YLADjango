@@ -4,6 +4,7 @@
 <form method="post" accept-charset="UTF-8" content="text/plain; charset=UTF-8">
   {% csrf_token %}
   {{ form.as_p }}
+  <button type="submit">Submit</button>
 </form>
 
 {% endblock content %}
