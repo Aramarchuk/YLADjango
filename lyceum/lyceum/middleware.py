@@ -6,40 +6,44 @@ __all__ = ()
 
 
 class SimpleMiddleware:
-    n = 0
+    time = 0
 
     def __init__(self, get_response):
         self.get_response = get_response
 
+    @classmethod
+    def check_reverse(cls):
+        if not settings.ALLOW_REVERSE:
+            return False
+
+        cls.time += 1
+        if cls.time == 10:
+            cls.time = 0
+            return True
+        return False
+
+    def reverse_russian_words(self, text):
+        unchanged_content = text
+        out_con = ""
+        end_index = 0
+        for match_iter in re.finditer(
+            r"\b[а-яА-ЯёЁ]+\b",
+            unchanged_content,
+        ):
+            out_con += unchanged_content[
+                end_index : match_iter.start()  # noqa E203
+            ]
+            out_con += match_iter[0][::-1]
+            end_index = match_iter.end()
+        out_con += unchanged_content[end_index:]
+        return out_con
+
     def __call__(self, request):
         response = self.get_response(request)
-        if not settings.ALLOW_REVERSE:
-            return response
 
-        if self.check_settings():
+        if self.check_reverse():
             response.content = self.reverse_russian_words(
                 response.content.decode("utf-8"),
             )
 
         return response
-
-    @staticmethod
-    def reverse_russian_words(text):
-        russian_words_pattern = re.compile(r"^\b[а-яА-яЁё]+\b$")
-        words = re.findall(r"\w+|\w+", text)
-        reversed_text = []
-        for word in words:
-            if re.fullmatch(russian_words_pattern, word):
-                reversed_word = word[::-1]
-                reversed_text.append(reversed_word)
-            else:
-                reversed_text.append(word)
-        pattern = re.compile(r"\b(" + "|".join(map(re.escape, words)) + r")\b")
-        return pattern.sub(lambda x: reversed_text.pop(0), text)
-
-    @classmethod
-    def check_settings(cls):
-        cls.n += 1
-        if settings.ALLOW_REVERSE and cls.n % 10 == 0:
-            return True
-        return False
