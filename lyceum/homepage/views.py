@@ -30,9 +30,10 @@ def echo(request):
 
 def echo_submit(request):
     form = EchoForm(request.POST)
+    print(form.cleaned_data["text"])
     if request.method == "POST" and form.is_valid():
         return HttpResponse(
-            form.cleaned_data.get("text"),
+            form.cleaned_data["text"],
             content_type="text/plain",
             charset="utf-8",
         )
