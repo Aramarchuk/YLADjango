@@ -22,8 +22,9 @@ def coffee(request):
 
 def echo(request):
     if request.method == "GET":
-        form = EchoForm()
-        return render(request, "homepage/echo.html", {"form": form})
+        template = "homepage/echo.html"
+        context = {"form": EchoForm()}
+        return render(request, template, context)
     return HttpResponseNotAllowed(["POST"])
 
 
@@ -32,6 +33,8 @@ def echo_submit(request):
         form = EchoForm(request.POST)
         if form.is_valid():
             text = form.cleaned_data["text"]
-            return HttpResponse(text, content_type="text/plain",
-                                charset="utf-8")
+            return HttpResponse(
+                text,
+                content_type="text/plain charset=UTF-8",
+            )
     return HttpResponseNotAllowed(["POST"])
