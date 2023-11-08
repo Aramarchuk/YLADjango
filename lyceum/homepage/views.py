@@ -29,7 +29,7 @@ def echo(request):
 
 
 def echo_submit(request):
-    form = EchoForm(request.POST or None)
+    form = EchoForm(request.POST)
     if request.method == "POST" and form.is_valid():
         return HttpResponse(
             form.cleaned_data.get("text"),

@@ -29,7 +29,10 @@ class SimpleMiddleware:
             unchanged_content = response.content.decode("utf-8")
             out_con = ""
             end_index = 0
-            for match_iter in re.finditer(r"[а-яА-ЯёЁ]+", unchanged_content):
+            for match_iter in re.finditer(
+                r"\b[а-яА-ЯёЁ]+\b",
+                unchanged_content,
+            ):
                 out_con += unchanged_content[
                     end_index : match_iter.start()  # noqa E203
                 ]

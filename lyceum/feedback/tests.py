@@ -62,7 +62,7 @@ class FormTest(TestCase):
             "Введите правильный адрес электронной почты.",
             form.errors["mail"],
         )
-    
+
     def test_feedback_empty(self):
         data = {
             "text": "",
