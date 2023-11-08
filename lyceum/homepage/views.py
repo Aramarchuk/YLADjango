@@ -23,7 +23,7 @@ def coffee(request):
 def echo(request):
     if request.method == "GET":
         template = "homepage/echo.html"
-        context = {"echo_form": EchoForm()}
+        context = {"form": EchoForm()}
         return render(request, template, context)
     return HttpResponseNotAllowed(["POST"])
 

@@ -5,4 +5,7 @@ __all__ = ()
 
 
 class EchoForm(forms.Form):
-    text = forms.CharField()
+    text = forms.CharField(
+        widget=forms.Textarea,
+        label="текст",
+    )

@@ -3,7 +3,7 @@
 
 <form method="post">
   {% csrf_token %}
-  {{ echo_form.as_ul }}
+  {{ form.as_p }}
 </form>
 
 {% endblock content %}
