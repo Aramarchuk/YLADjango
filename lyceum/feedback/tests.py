@@ -1,7 +1,6 @@
 import django
 from django.test import Client, TestCase
 
-
 from feedback.forms import FeedbackForm
 from feedback.models import Feedback
 
@@ -78,7 +77,7 @@ class FormTest(TestCase):
         self.assertTrue(form.has_error("mail"))
 
     def test_count_feedback(self):
-        old_len = len(Feedback.objects.all())
+        old_len = Feedback.objects.all().count()
         data = {
             "text": "Тестовый Текст",
             "mail": "example@gmail.com",
@@ -87,4 +86,14 @@ class FormTest(TestCase):
         form = FeedbackForm(data=data)
         self.assertTrue(form.is_valid())
         form.save()
-        self.assertEqual(len(Feedback.objects.all()), old_len + 1)
+        self.assertEqual(Feedback.objects.all().count(), old_len + 1)
+
+    def test_valid_form_db(self):
+        old_len = Feedback.objects.all().count()
+        data = {
+            "text": "Тестовый Текст",
+            "mail": "example@gmail.com",
+            "name": "Example Name",
+        }
+        self.client.post("/feedback/", data=data)
+        self.assertEqual(Feedback.objects.all().count(), old_len + 1)
