@@ -49,15 +49,17 @@ class StatusLog(models.Model):
         ("время"),
         auto_now_add=True,
     )
-    from_status = models.fields.TextField(
+    from_status = models.fields.CharField(
         verbose_name="старый статус обработки",
         choices=CHOISES,
         db_column="from",
+        max_length=4,
     )
-    to_status = models.fields.TextField(
+    to = models.fields.TextField(
         verbose_name="новый статус обработки",
         choices=CHOISES,
         db_column="to",
+        max_length=4,
     )
 
     class Meta:
