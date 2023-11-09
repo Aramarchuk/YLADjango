@@ -21,11 +21,12 @@ class ItemAdmin(admin.ModelAdmin):
             user = request.user
             to = form.cleaned_data["status"]
             old_status = feedback.models.Feedback.objects.get(pk=obj.pk).status
-            feedback.models.StatusLog.objects.create(
-                user=user,
-                from_status=old_status,
-                to=to,
-            )
+            if old_status != to:
+                feedback.models.StatusLog.objects.create(
+                    user=user,
+                    from_status=old_status,
+                    to_status=to,
+                )
         super().save_model(request, obj, form, change)
 
 

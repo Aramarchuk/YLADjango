@@ -1,8 +1,15 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 
 
 __all__ = ()
+
+
+CHOISES = [
+    ("IN", "в обработке"),
+    ("GET", "получено"),
+    ("ANS", "ответ дан"),
+]
 
 
 class Feedback(models.Model):
@@ -23,27 +30,19 @@ class Feedback(models.Model):
     )
     name = models.fields.TextField(
         verbose_name="имя",
-        default=None,
+        null=True,
+        blank=True,
     )
     status = models.fields.TextField(
         verbose_name="статус обработки",
-        choices=[
-            ("IN", "в обработке"),
-            ("GET", "получено"),
-            ("ANS", "ответ дан"),
-        ],
+        choices=CHOISES,
         default="GET",
     )
 
 
 class StatusLog(models.Model):
-    class Meta:
-        verbose_name = "Лог изменения"
-        verbose_name_plural = "Лог изменений"
-
     user = models.ForeignKey(
-        User,
-        verbose_name=("пользователь"),
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
     timestamp = models.DateTimeField(
@@ -51,18 +50,16 @@ class StatusLog(models.Model):
         auto_now_add=True,
     )
     from_status = models.fields.TextField(
-        verbose_name="статус обработки",
-        choices=[
-            ("IN", "в обработке"),
-            ("GET", "в обработке"),
-            ("ANS", "ответ дан"),
-        ],
+        verbose_name="старый статус обработки",
+        choices=CHOISES,
+        db_column="from",
     )
-    to = models.fields.TextField(
-        verbose_name="статус обработки",
-        choices=[
-            ("IN", "в обработке"),
-            ("GET", "в обработке"),
-            ("ANS", "ответ дан"),
-        ],
+    to_status = models.fields.TextField(
+        verbose_name="новый статус обработки",
+        choices=CHOISES,
+        db_column="to",
     )
+
+    class Meta:
+        verbose_name = "Лог изменения"
+        verbose_name_plural = "Лог изменений"

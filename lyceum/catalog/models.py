@@ -155,15 +155,15 @@ class Item(CatalogAbstraction):
             )
         return "Нет изображения"
 
-    class Meta:
-        verbose_name = "товар"
-        verbose_name_plural = "товары"
-
     image_tmb.short_description = "превью"
     image_tmb.allow_tags = True
 
     def __str__(self):
         return self.name[:15]
+
+    class Meta:
+        verbose_name = "товар"
+        verbose_name_plural = "товары"
 
 
 class ImageBaseModel(models.Model):
