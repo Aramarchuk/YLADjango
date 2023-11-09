@@ -29,6 +29,7 @@ def feedback(request):
             request,
             "Письмо успешно отправлено!",
         )
+        form.save()
         return redirect("feedback:feedback")
 
     return render(request, template, context)

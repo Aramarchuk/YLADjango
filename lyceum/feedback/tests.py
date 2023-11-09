@@ -31,6 +31,7 @@ class FormTest(TestCase):
         form_data = {
             "text": "testText",
             "mail": "example@gmail.com",
+            "name": "Example Name",
         }
         response = Client().post(
             django.urls.reverse("feedback:feedback"),
@@ -47,6 +48,7 @@ class FormTest(TestCase):
         data = {
             "text": "Тестовый Текст",
             "mail": "example@gmail.com",
+            "name": "Example Name",
         }
 
         self.assertTrue(FeedbackForm(data).is_valid())
@@ -55,6 +57,7 @@ class FormTest(TestCase):
         data = {
             "text": "Тестовый Текст",
             "mail": "examplegmail.com",
+            "name": "Example Name",
         }
         form = FeedbackForm(data)
         self.assertFalse(form.is_valid())
