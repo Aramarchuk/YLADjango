@@ -1,8 +1,8 @@
 import django
 from django.test import Client, TestCase
 
-from feedback.forms import FeedbackForm
-from feedback.models import Feedback
+from feedback.forms import AuthorForm, FeedbackForm
+from feedback.models import Feedback, FeedbackFile
 
 __all__ = "FormTest"
 
@@ -14,15 +14,16 @@ class FormTest(TestCase):
 
     def test_feedback_context_type(self):
         response = Client().get(django.urls.reverse("feedback:feedback"))
-        self.assertIsInstance(response.context["form"], FeedbackForm)
+        self.assertIsInstance(response.context["feedback_form"], FeedbackForm)
 
     def test_feedback_context_label_and_help(self):
         response = Client().get(django.urls.reverse("feedback:feedback"))
-        test_form = response.context["form"]
+        test_form = response.context["feedback_form"]
+        test_author_form = response.context["author_form"]
         self.assertEqual(test_form.fields["text"].label, "Текст")
-        self.assertEqual(test_form.fields["mail"].label, "Почта")
+        self.assertEqual(test_author_form.fields["mail"].label, "Почта")
         self.assertEqual(
-            test_form.fields["mail"].help_text,
+            test_author_form.fields["mail"].help_text,
             "Введите вашу почту",
         )
 
@@ -56,11 +57,10 @@ class FormTest(TestCase):
 
     def test_feedback_invalid_email(self):
         data = {
-            "text": "Тестовый Текст",
             "mail": "examplegmail.com",
             "name": "Example Name",
         }
-        form = FeedbackForm(data)
+        form = AuthorForm(data)
         self.assertFalse(form.is_valid())
         self.assertIn(
             "Введите правильный адрес электронной почты.",
@@ -68,24 +68,37 @@ class FormTest(TestCase):
         )
 
     def test_feedback_empty(self):
-        data = {
-            "text": "",
+        author_data = {
             "mail": "",
+            "name": "",
         }
-        form = FeedbackForm(data)
-        self.assertFalse(form.is_valid())
-        self.assertTrue(form.has_error("mail"))
+        fb_data = {
+            "text": "",
+        }
+        author_form = AuthorForm(author_data)
+        fb_form = FeedbackForm(fb_data)
+        self.assertFalse(author_form.is_valid())
+        self.assertFalse(fb_form.is_valid())
+        self.assertTrue(author_form.has_error("mail"))
 
     def test_count_feedback(self):
         old_len = Feedback.objects.all().count()
-        data = {
-            "text": "Тестовый Текст",
+        author_data = {
             "mail": "example@gmail.com",
-            "name": "Example Name",
+            "name": "q",
         }
-        form = FeedbackForm(data=data)
-        self.assertTrue(form.is_valid())
-        form.save()
+        fb_data = {
+            "text": "t",
+        }
+        author_form = AuthorForm(author_data)
+        fb_form = FeedbackForm(fb_data)
+        self.assertTrue(author_form.is_valid())
+        author_form.save()
+        fb = fb_form.save(commit=False)
+        author = author_form.save(commit=False)
+        fb.author = author
+        fb.save()
+        author.save()
         self.assertEqual(Feedback.objects.all().count(), old_len + 1)
 
     def test_valid_form_db(self):
@@ -97,3 +110,15 @@ class FormTest(TestCase):
         }
         self.client.post("/feedback/", data=data)
         self.assertEqual(Feedback.objects.all().count(), old_len + 1)
+
+    def test_valid_file_form(self):
+        old_len = FeedbackFile.objects.all().count()
+        file = open("feedback/admin.py", "r")
+        data = {
+            "text": "Тестовый Текст",
+            "mail": "example@gmail.com",
+            "name": "Example Name",
+            "files": [file],
+        }
+        self.client.post("/feedback/", data=data)
+        self.assertEqual(FeedbackFile.objects.all().count(), old_len + 1)

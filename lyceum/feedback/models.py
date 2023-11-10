@@ -12,6 +12,37 @@ CHOISES = [
 ]
 
 
+def file_directory_path(instance, filename):
+    print(str(instance.feedback.id))
+    return f"uploads/{str(instance.feedback.id)}"
+
+
+class Author(models.Model):
+    mail = models.EmailField(
+        verbose_name=("почта"),
+        max_length=254,
+    )
+    name = models.fields.TextField(
+        verbose_name=("имя"),
+        null=True,
+        blank=True,
+    )
+
+
+class FeedbackFile(models.Model):
+    feedback = models.ForeignKey(
+        "Feedback",
+        verbose_name=("фидбек файла"),
+        on_delete=models.CASCADE,
+        related_name="feedback",
+    )
+    file = models.FileField(
+        "file",
+        upload_to=file_directory_path,
+        default=None,
+    )
+
+
 class Feedback(models.Model):
     class Meta:
         verbose_name = "Фидбек"
@@ -24,14 +55,11 @@ class Feedback(models.Model):
         auto_now_add=True,
         verbose_name=("дата и время создания"),
     )
-    mail = models.EmailField(
-        verbose_name=("почта"),
-        max_length=254,
-    )
-    name = models.fields.TextField(
-        verbose_name="имя",
+    author = models.ForeignKey(
+        Author,
+        on_delete=models.CASCADE,
+        default=None,
         null=True,
-        blank=True,
     )
     status = models.fields.TextField(
         verbose_name="статус обработки",
