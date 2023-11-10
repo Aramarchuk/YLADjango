@@ -2,6 +2,7 @@ from pathlib import Path
 
 import django
 from django.test import Client, override_settings, TestCase
+
 from feedback.forms import AuthorForm, FeedbackForm
 from feedback.models import Feedback, FeedbackFile
 
