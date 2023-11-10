@@ -116,7 +116,6 @@ class FormTest(TestCase):
         MEDAI_ROOT=django.conf.settings.BASE_DIR / "feedback/test_files/",
     )
     def test_valid_file_form(self):
-        print(django.conf.settings.BASE_DIR)
         old_len = FeedbackFile.objects.all().count()
         file = Path("feedback/test_files/test_file.txt").open()
         data = {
