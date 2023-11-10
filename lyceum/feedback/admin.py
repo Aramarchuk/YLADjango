@@ -1,7 +1,6 @@
 from django.contrib import admin
-from django.http.request import HttpRequest
 
-import feedback.models
+import feedback
 
 
 __all__ = ()
@@ -15,9 +14,7 @@ class FileInline(admin.TabularInline):
 class AuthorInline(admin.TabularInline):
     model = feedback.models.Author
     fields = ("name", "mail")
-
-    def has_delete_permission(self, request: HttpRequest, obj) -> bool:
-        return False
+    can_delete = False
 
 
 @admin.register(feedback.models.Feedback)

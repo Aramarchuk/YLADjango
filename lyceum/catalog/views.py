@@ -9,7 +9,7 @@ __all__ = ()
 
 
 def item_list(request):
-    template = "catalog/catalog.html"
+    template = "catalog/item_list.html"
     context = {"items": Item.objects.published().order_by("category__name")}
     return render(request, template, context)
 

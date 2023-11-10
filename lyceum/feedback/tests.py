@@ -113,8 +113,11 @@ class FormTest(TestCase):
         self.client.post("/feedback/", data=data)
         self.assertEqual(Feedback.objects.all().count(), old_len + 1)
 
-    @override_settings(MEDAI_ROOT="feedback/test_files/")
+    @override_settings(
+        MEDAI_ROOT=django.conf.settings.BASE_DIR / "feedback/test_files/",
+    )
     def test_valid_file_form(self):
+        print(django.conf.settings.BASE_DIR)
         old_len = FeedbackFile.objects.all().count()
         file = Path("feedback/test_files/test_file.txt").open()
         data = {

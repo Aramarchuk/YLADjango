@@ -27,7 +27,7 @@ def feedback(request):
         and file_form.is_valid()
     ):
         text = form.cleaned_data.get("text")
-        mail_to = form.cleaned_data.get("mail")
+        mail_to = author_form.cleaned_data.get("mail")
         send_mail(
             "Обратная связь получена",
             text,
