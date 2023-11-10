@@ -12,11 +12,6 @@ CHOISES = [
 ]
 
 
-def file_directory_path(instance, filename):
-    print(str(instance.feedback.id))
-    return f"uploads/{str(instance.feedback.id)}"
-
-
 class Author(models.Model):
     mail = models.EmailField(
         verbose_name=("почта"),
@@ -27,9 +22,20 @@ class Author(models.Model):
         null=True,
         blank=True,
     )
+    feedback = models.OneToOneField(
+        "Feedback",
+        verbose_name=("фидбек"),
+        on_delete=models.CASCADE,
+        related_name="author",
+        null=True,
+        blank=True,
+    )
 
 
 class FeedbackFile(models.Model):
+    def file_directory_path(self, filename):
+        return f"uploads/{str(self.feedback.id)}/{filename}"
+
     feedback = models.ForeignKey(
         "Feedback",
         verbose_name=("фидбек файла"),
@@ -54,12 +60,6 @@ class Feedback(models.Model):
     created_on = models.fields.DateTimeField(
         auto_now_add=True,
         verbose_name=("дата и время создания"),
-    )
-    author = models.ForeignKey(
-        Author,
-        on_delete=models.CASCADE,
-        default=None,
-        null=True,
     )
     status = models.fields.TextField(
         verbose_name="статус обработки",

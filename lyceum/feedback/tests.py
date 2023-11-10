@@ -1,5 +1,7 @@
+from pathlib import Path
+
 import django
-from django.test import Client, TestCase
+from django.test import Client, override_settings, TestCase
 
 from feedback.forms import AuthorForm, FeedbackForm
 from feedback.models import Feedback, FeedbackFile
@@ -111,9 +113,10 @@ class FormTest(TestCase):
         self.client.post("/feedback/", data=data)
         self.assertEqual(Feedback.objects.all().count(), old_len + 1)
 
+    @override_settings(MEDAI_ROOT="feedback/test_files/")
     def test_valid_file_form(self):
         old_len = FeedbackFile.objects.all().count()
-        file = open("feedback/admin.py", "r")
+        file = Path("feedback/test_files/test_file.txt").open()
         data = {
             "text": "Тестовый Текст",
             "mail": "example@gmail.com",

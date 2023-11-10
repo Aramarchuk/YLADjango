@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
                     "file",
                     models.FileField(
                         default=None,
-                        upload_to=feedback.models.file_directory_path,
+                        upload_to=feedback.models.FeedbackFile.file_directory_path,
                         verbose_name="feedback_file",
                     ),
                 ),

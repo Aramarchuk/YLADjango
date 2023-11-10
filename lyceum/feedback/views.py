@@ -39,11 +39,11 @@ def feedback(request):
             request,
             "Письмо успешно отправлено!",
         )
-        author = author_form.save()
-        fb = form.save(commit=False)
-        fb.author = author
+        author = author_form.save(commit=False)
+        fb = form.save()
+        author.feedback = fb
+        author.save()
         fb.save()
-        # instance = FeedbackFile(file=request.FILES["files"])
         files = request.FILES.getlist("files")
         for file in files:
             FeedbackFile.objects.create(

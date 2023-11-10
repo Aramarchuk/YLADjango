@@ -71,7 +71,7 @@ class AuthorForm(forms.ModelForm):
 
     class Meta:
         model = Author
-        exclude = []
+        exclude = ["feedback"]
 
         labels = {
             "mail": "Почта",
