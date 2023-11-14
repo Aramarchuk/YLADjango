@@ -1,5 +1,7 @@
 import django.contrib.auth.views
-from django.urls import include, path
+from django.urls import path
+
+import users.views
 
 
 app_name = "users"
@@ -60,5 +62,30 @@ urlpatterns = [
             template_name="users/password_reset_confirm.html",
         ),
         name="password_reset_confirm",
+    ),
+    path(
+        "signup/",
+        users.views.signup,
+        name="signup",
+    ),
+    path(
+        "activate/<str:username>",
+        users.views.activate_user,
+        name="activate",
+    ),
+    path(
+        "user_list/",
+        users.views.user_list,
+        name="user_list",
+    ),
+    path(
+        "user_detail/",
+        users.views.user_deatil,
+        name="user_detail",
+    ),
+    path(
+        "profile/",
+        users.views.profile,
+        name="profile",
     ),
 ]

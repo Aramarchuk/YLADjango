@@ -6,7 +6,7 @@ __all__ = "Profile"
 
 
 class Profile(models.Model):
-    def upload_path(self):
+    def upload_path(self, filename):
         return f"avatar/{str(self.id)}"
 
     user = models.OneToOneField(
@@ -14,6 +14,7 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
+        related_name="profile",
     )
     birthday = models.DateField(
         verbose_name="дата рождения",
@@ -21,10 +22,12 @@ class Profile(models.Model):
         null=True,
     )
     avatar = models.ImageField(
-        ("аватарка"),
+        verbose_name=("аватарка"),
         upload_to=upload_path,
+        blank=True,
+        null=True,
     )
-    coffee_count = models.IntegerField(
+    coffee_count = models.PositiveIntegerField(
         verbose_name="выпито кофе",
         default=0,
     )

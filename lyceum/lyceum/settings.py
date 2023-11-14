@@ -49,6 +49,15 @@ ALLOW_REVERSE = os.getenv("DJANGO_ALLOW_REVERSE", "True") in [
 
 DJANGO_MAIL = os.getenv("DJANGO_MAIL")
 
+DEFAULT_USER_IS_ACTIVE = os.getenv("DEFAULT_USER_IS_ACTIVE", str(DEBUG)) in [
+    "true",
+    "True",
+    "yes",
+    "YES",
+    "1",
+    "y",
+]
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
