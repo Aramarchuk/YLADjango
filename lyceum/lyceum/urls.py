@@ -17,6 +17,7 @@ Including another URLconf
 import django.conf
 import django.conf.urls.static
 from django.contrib import admin
+import django.contrib.auth.urls
 import django.contrib.staticfiles.urls
 import django.urls
 from django.urls import include, path
@@ -31,6 +32,8 @@ urlpatterns = [
     path("about/", include("about.urls")),
     path("feedback/", include("feedback.urls")),
     path("admin/", admin.site.urls),
+    path("auth/", include("users.urls")),
+    path("auth/", include(django.contrib.auth.urls)),
 ]
 
 if django.conf.settings.DEBUG:

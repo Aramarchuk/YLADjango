@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "catalog.apps.CatalogConfig",
     "feedback.apps.FeedbackConfig",
     "homepage.apps.HomepageConfig",
+    "users.apps.UsersConfig",
 ]
 
 MIDDLEWARE = [

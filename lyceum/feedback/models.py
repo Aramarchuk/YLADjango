@@ -1,3 +1,5 @@
+import time
+
 from django.conf import settings
 from django.db import models
 
@@ -34,7 +36,7 @@ class Author(models.Model):
 
 class FeedbackFile(models.Model):
     def file_directory_path(self, filename):
-        return f"uploads/{str(self.feedback.id)}/{filename}"
+        return f"uploads/{str(self.feedback_id)}/{time.time()}_{filename}"
 
     feedback = models.ForeignKey(
         "Feedback",
