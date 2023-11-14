@@ -5,8 +5,9 @@ from django.contrib import messages
 import django.contrib.auth
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.http import HttpResponseNotFound
+from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.utils import timezone
 
 import users.forms
 import users.models
@@ -23,11 +24,17 @@ def signup(request):
         "signup_form": signup_form,
     }
     if request.method == "POST" and signup_form.is_valid():
-        login = signup_form.cleaned_data.get("username")
-        mail_to = signup_form.cleaned_data.get("mail", "example@gmail.com")
+        user = signup_form.save(commit=False)
+        user.is_active = settings.DEFAULT_USER_IS_ACTIVE
+        user.save()
+        users.models.Profile.objects.create(user=user)
+        mail_to = signup_form.cleaned_data.get("email", "example@gmail.com")
+        activate_link = request.build_absolute_uri(
+            reverse("users:activate", kwargs={"username": user.username}),
+        )
         send_mail(
             "Активация пользователя",
-            f"для активации перейдите по ссылке \n /activate/{login}",
+            f"для активации перейдите по ссылке \n {activate_link}",
             settings.DJANGO_MAIL,
             [mail_to],
             fail_silently=False,
@@ -40,10 +47,6 @@ def signup(request):
             request,
             "Письмо для активации отправлено!",
         )
-        user = signup_form.save(commit=False)
-        user.is_active = settings.DEFAULT_USER_IS_ACTIVE
-        user.save()
-        users.models.Profile.objects.create(user=user)
 
         return redirect("users:signup")
 
@@ -55,14 +58,20 @@ def activate_user(request, username):
         username=username,
     ):
         if (
-            datetime.datetime.now() - datetime.timedelta(hours=12)
-            <= user.data_joined
+            timezone.make_aware(
+                datetime.datetime.now(),
+                timezone.get_default_timezone(),
+            )
+            - datetime.timedelta(hours=12)
+            <= user.date_joined
         ):
             user.is_active = True
             user.save()
             return redirect("users:login")
 
-    return HttpResponse.HttpResponceNotFound
+    return HttpResponseNotFound(
+        "Пользователь не найден или время активации истекло",
+    )
 
 
 def user_list(request):
