@@ -12,7 +12,12 @@ class SignupForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = (
+            User.username.field.name,
+            User.email.field.name,
+            "password1",
+            "password2",
+        )
 
 
 class UserChangeForm(forms.ModelForm):
@@ -31,8 +36,9 @@ class ProfileChangeForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.visible_fields():
             field.field.widget.attrs["class"] = "form-control"
-        self.fields["avatar"].widget.attrs["type"] = "file"
+        self.fields["image"].widget.attrs["type"] = "file"
+        self.fields["coffee_count"].widget.attrs["readonly"] = True
 
     class Meta:
         model = Profile
-        fields = ("birthday", "avatar")
+        fields = ("birthday", "image", "coffee_count")

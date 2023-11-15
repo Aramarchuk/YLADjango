@@ -199,3 +199,9 @@ CKEDITOR_CONFIGS = {
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 
 EMAIL_FILE_PATH = BASE_DIR / "send_mail"
+
+LOGIN_URL = "../login/"
+
+LOGIN_REDIRECT_URL = "../profile/"
+
+LOGOUT_REDIRECT_URL = "../login/"

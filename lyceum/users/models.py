@@ -7,7 +7,7 @@ __all__ = "Profile"
 
 class Profile(models.Model):
     def upload_path(self, filename):
-        return f"avatar/{str(self.id)}"
+        return f"image/{str(self.id)}"
 
     user = models.OneToOneField(
         User,
@@ -21,7 +21,7 @@ class Profile(models.Model):
         blank=True,
         null=True,
     )
-    avatar = models.ImageField(
+    image = models.ImageField(
         verbose_name=("аватарка"),
         upload_to=upload_path,
         blank=True,

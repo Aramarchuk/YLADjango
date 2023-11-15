@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 import catalog.models
 from homepage.forms import EchoForm
+import users.models
 
 
 __all__ = ()
@@ -17,6 +18,10 @@ def home(request):
 
 
 def coffee(request):
+    if request.user.id:
+        profile = users.models.User.objects.get(pk=request.user.id).profile
+        profile.coffee_count += 1
+        profile.save()
     return HttpResponse("Я чайник", status=418)
 
 
