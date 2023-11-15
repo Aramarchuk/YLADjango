@@ -10,7 +10,7 @@ __all__ = ()
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text="Required")
 
-    class Meta(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
         model = User
         fields = (
             User.username.field.name,
