@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.contrib import messages
@@ -54,20 +54,21 @@ def signup(request):
 
 
 def activate_user(request, username):
-    if user := django.contrib.auth.models.User.objects.get(
+    user = django.contrib.auth.models.User.objects.get(
         username=username,
+    )
+    if (
+        timezone.now()
+        - timedelta(hours=12)
+        <= user.date_joined
     ):
-        if (
-            timezone.make_aware(
-                datetime.datetime.now(),
-                timezone.get_default_timezone(),
-            )
-            - datetime.timedelta(hours=12)
-            <= user.date_joined
-        ):
-            user.is_active = True
-            user.save()
-            return redirect("users:login")
+        user.is_active = True
+        user.save()
+        new_user = django.contrib.auth.models.User.objects.get(
+            username=username,
+        )
+        print(new_user.is_active)
+        return redirect("users:login")
 
     return HttpResponseNotFound(
         "Пользователь не найден или время активации истекло",

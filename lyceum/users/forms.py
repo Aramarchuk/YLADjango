@@ -19,6 +19,20 @@ class SignupForm(UserCreationForm):
             "password2",
         )
 
+    def clean(self):
+        cleaned_data = super().clean()
+        email = self.cleaned_data["email"].lower().strip()
+        left_part = email.split("@")[0].replace("+", "")
+        right_part = email.split("@")[1].replace("ya.ru", "yandex.ru")
+        if right_part == "gmail.com":
+            left_part = left_part.replace(".", "")
+        elif right_part == "yandex.ru":
+            left_part = left_part.replace(".", "-")
+        cleaned_data["email"] = left_part + "@" + right_part
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This mail already registered")
+        return cleaned_data
+
 
 class UserChangeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -41,4 +55,8 @@ class ProfileChangeForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ("birthday", "image", "coffee_count")
+        fields = (
+            Profile.birthday.field.name,
+            Profile.image.field.name,
+            Profile.coffee_count.field.name,
+        )
