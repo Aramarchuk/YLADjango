@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from unittest import mock
 
 from django.test import Client, override_settings, TestCase
@@ -71,11 +71,13 @@ class SignupTests(TestCase):
             is_active=False,
         )
 
-    @parameterized.expand([
-        ["ex@gmail.com", "ex@gmail.com"],
-        ["ars.plmr@yandex.ru", "ars-plmr@yandex.ru"],
-        ["example@yandex.ru", "example@ya.ru"],
-    ])
+    @parameterized.expand(
+        [
+            ["ex@gmail.com", "ex@gmail.com"],
+            ["ars.plmr@yandex.ru", "ars-plmr@yandex.ru"],
+            ["example@yandex.ru", "example@ya.ru"],
+        ],
+    )
     def test_normalization_email(self, email1, email2):
         old_users = users.models.User.objects.count()
         Client().post(

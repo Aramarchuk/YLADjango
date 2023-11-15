@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.conf import settings
 from django.contrib import messages
@@ -57,11 +57,7 @@ def activate_user(request, username):
     user = django.contrib.auth.models.User.objects.get(
         username=username,
     )
-    if (
-        timezone.now()
-        - timedelta(hours=12)
-        <= user.date_joined
-    ):
+    if timezone.now() - timedelta(hours=12) <= user.date_joined:
         user.is_active = True
         user.save()
         new_user = django.contrib.auth.models.User.objects.get(
