@@ -3,7 +3,6 @@ from django.shortcuts import render
 
 import catalog.models
 from homepage.forms import EchoForm
-import users.models
 
 
 __all__ = ()
