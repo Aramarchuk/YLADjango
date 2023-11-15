@@ -45,7 +45,7 @@ class Tag(CatalogAbstraction):
         ],
     )
 
-    class Meta:
+    class Meta(CatalogAbstraction):
         verbose_name = "тег"
         verbose_name_plural = "теги"
 
@@ -68,7 +68,7 @@ class Category(CatalogAbstraction):
         verbose_name=("вес"),
     )
 
-    class Meta:
+    class Meta(CatalogAbstraction):
         verbose_name = "категория"
         verbose_name_plural = "категории"
 
@@ -161,7 +161,7 @@ class Item(CatalogAbstraction):
     def __str__(self):
         return self.name[:15]
 
-    class Meta:
+    class Meta(CatalogAbstraction):
         verbose_name = "товар"
         verbose_name_plural = "товары"
 
@@ -221,7 +221,7 @@ class Image(ImageBaseModel):
         related_name="images",
     )
 
-    class Meta:
+    class Meta(ImageBaseModel):
         verbose_name = "фото"
         verbose_name_plural = "фото"
 
