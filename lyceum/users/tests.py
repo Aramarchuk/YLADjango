@@ -107,7 +107,6 @@ class SignupTests(TestCase):
         user = users.models.User.objects.get(
             username=user.username,
         )
-        print(user.is_active)
         self.assertTrue(user.is_active)
 
     @mock.patch("users.views.timezone")

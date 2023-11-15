@@ -60,10 +60,6 @@ def activate_user(request, username):
     if timezone.now() - timedelta(hours=12) <= user.date_joined:
         user.is_active = True
         user.save()
-        new_user = django.contrib.auth.models.User.objects.get(
-            username=username,
-        )
-        print(new_user.is_active)
         return redirect("users:login")
 
     return HttpResponseNotFound(

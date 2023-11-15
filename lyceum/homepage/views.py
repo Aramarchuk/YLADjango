@@ -18,10 +18,9 @@ def home(request):
 
 
 def coffee(request):
-    if request.user.id:
-        profile = users.models.User.objects.get(pk=request.user.id).profile
-        profile.coffee_count += 1
-        profile.save()
+    if request.user.is_authenticated:
+        request.user.profile.coffee_count += 1
+        request.user.profile.save()
     return HttpResponse("Я чайник", status=418)
 
 

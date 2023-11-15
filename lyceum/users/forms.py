@@ -10,7 +10,7 @@ __all__ = ()
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text="Required")
 
-    class Meta:
+    class Meta(UserCreationForm):
         model = User
         fields = (
             User.username.field.name,
@@ -42,7 +42,10 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("username", "email")
+        fields = (
+            User.username.field.name,
+            User.email.field.name,
+        )
 
 
 class ProfileChangeForm(forms.ModelForm):
@@ -51,7 +54,6 @@ class ProfileChangeForm(forms.ModelForm):
         for field in self.visible_fields():
             field.field.widget.attrs["class"] = "form-control"
         self.fields["image"].widget.attrs["type"] = "file"
-        self.fields["coffee_count"].widget.attrs["readonly"] = True
 
     class Meta:
         model = Profile
@@ -60,3 +62,8 @@ class ProfileChangeForm(forms.ModelForm):
             Profile.image.field.name,
             Profile.coffee_count.field.name,
         )
+        widgets = {
+            Profile.coffee_count.field.name: (
+                forms.NumberInput(attrs={"disabled": True})
+            ),
+        }
