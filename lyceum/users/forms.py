@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 
 from users.models import Profile
@@ -34,13 +34,13 @@ class SignupForm(UserCreationForm):
         return cleaned_data
 
 
-class UserChangeForm(forms.ModelForm):
+class UserChangeForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.visible_fields():
             field.field.widget.attrs["class"] = "form-control"
 
-    class Meta:
+    class Meta(UserChangeForm.Meta):
         model = User
         fields = (
             User.username.field.name,
