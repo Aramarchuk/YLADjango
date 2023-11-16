@@ -16,7 +16,7 @@ def feedback(request):
     author_form = AuthorForm(request.POST or None)
     file_form = FeedbackFileForm(request.POST or None)
     context = {
-        "feedback_forms": form,
+        "feedback_form": form,
         "author_form": author_form,
         "file_form": file_form,
     }
