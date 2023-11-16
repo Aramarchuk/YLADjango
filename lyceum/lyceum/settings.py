@@ -84,7 +84,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "lyceum.middleware.SimpleMiddleware",
-    "lyceum.middleware.ProxyUserMiddleware",
+    "users.middleware.ProxyUserMiddleware",
 ]
 
 if settings.DEBUG:
