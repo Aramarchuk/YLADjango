@@ -21,7 +21,7 @@ class UserManager(BaseUserManager):
         )
 
     def by_mail(self, email):
-        return self.active().filter(email=email)
+        return self.active().get(email=email)
 
 
 class User(BaseUser):
