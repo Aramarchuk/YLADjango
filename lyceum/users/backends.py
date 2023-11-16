@@ -7,12 +7,13 @@ __all__ = "EmailAuthBackend"
 
 class EmailAuthBackend(BaseBackend):
     def authenticate(self, request, username=None, password=None):
-        email_valid = User.objects.active().filter(email=username).count() == 1
-        if email_valid:
+        try:
             user = User.objects.get(email=username)
             password_valid = user.check_password(password)
             if password_valid:
                 return user
+        except User.DoesNotExist:
+            pass
         return None
 
     def get_user(self, user_id):
