@@ -2,6 +2,8 @@ import re
 
 from django.conf import settings
 
+import users.models
+
 __all__ = ()
 
 
@@ -47,3 +49,16 @@ class SimpleMiddleware:
             )
 
         return response
+
+
+class ProxyUserMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if request.user.id:
+            request.user = users.models.User.objects.active().get(
+                id=request.user.id,
+            )
+
+        return self.get_response(request)

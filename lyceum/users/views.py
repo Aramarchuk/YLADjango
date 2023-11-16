@@ -2,17 +2,16 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.contrib import messages
-import django.contrib.auth
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import HttpResponseNotFound
-from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.shortcuts import redirect, render, reverse
 from django.utils import timezone
 
 import users.forms
 import users.models
 
-__all__ = "signup"
+__all__ = ("signup", "activate_user")
 
 
 def signup(request):
@@ -21,7 +20,7 @@ def signup(request):
         request.POST or None,
     )
     context = {
-        "signup_form": signup_form,
+        "form": signup_form,
     }
     if request.method == "POST" and signup_form.is_valid():
         user = signup_form.save(commit=False)
@@ -54,7 +53,7 @@ def signup(request):
 
 
 def activate_user(request, username):
-    user = django.contrib.auth.models.User.objects.get(
+    user = users.models.User.objects.get(
         username=username,
     )
     if timezone.now() - timedelta(hours=12) <= user.date_joined:
@@ -70,20 +69,17 @@ def activate_user(request, username):
 def user_list(request):
     template = "users/user_list.html"
     users_list = list(
-        django.contrib.auth.models.User.objects.filter(is_active=True),
+        users.models.User.objects.active(),
     )
     context = {
-        "users_list": users_list,
+        "form": users_list,
     }
     return render(request, template, context)
 
 
 def user_deatil(request):
     template = "users/user_detail.html"
-    user = get_object_or_404(
-        django.contrib.auth.models.User,
-        id=request.user.id,
-    )
+    user = request.user
     profile = user.profile
     context = {
         "user": user,
@@ -95,10 +91,7 @@ def user_deatil(request):
 @login_required
 def profile(request):
     template = "users/profile.html"
-    user = get_object_or_404(
-        django.contrib.auth.models.User,
-        id=request.user.id,
-    )
+    user = request.user
     profile_form = users.forms.ProfileChangeForm(
         request.POST or None,
         request.FILES or None,
@@ -118,7 +111,6 @@ def profile(request):
             )
             return redirect("users:profile")
     context = {
-        "user_form": user_form,
-        "profile_form": profile_form,
+        "forms": [user_form, profile_form],
     }
     return render(request, template, context)

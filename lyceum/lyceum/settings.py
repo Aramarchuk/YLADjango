@@ -84,6 +84,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "lyceum.middleware.SimpleMiddleware",
+    "lyceum.middleware.ProxyUserMiddleware",
 ]
 
 if settings.DEBUG:
@@ -205,3 +206,8 @@ LOGIN_URL = "../login/"
 LOGIN_REDIRECT_URL = "../profile/"
 
 LOGOUT_REDIRECT_URL = "../login/"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "users.backends.EmailAuthBackend",
+]

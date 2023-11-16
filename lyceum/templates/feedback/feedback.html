@@ -1,15 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Обратная связь</h1>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <ul>
-        {{ author_form.as_ul }}
-        {{ feedback_form.as_ul }}
-        {{ file_form.as_ul }}
-    </ul>
-    <input type="submit" value="Отправить">
-</form>
+{% include "includes/form.html" %}
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}

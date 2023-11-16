@@ -24,21 +24,10 @@
     {% endif %}
     <form method="post" action="">
     {% csrf_token %}
-    {% for field in form %}
-        <label for="{{ field.id_for_label }}">
-            {{ field.label }}
-            {% if field.field.required %}
-                <span>*</span>
-            {% endif %}
-        </label>
-        {{ field }}
-        {% if field.help_text %}
-            <small id="{{ firld.id_for_label }}-help">
-                {{ firld.help_text|safe}}
-            </small>
-        {% endif %}
-    {% endfor %}
+    {% include "includes/form.html" %}
 
     <button type="submit">Войти</button>
+    </form>
+    </form>
     <a href="../password_change_form/">Забыли пароль?</a>
 </html>

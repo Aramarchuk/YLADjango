@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from django.contrib.auth.models import User
 
-from users.models import Profile
+# from django.contrib.auth.models import User
+
+from users.models import Profile, User
 
 __all__ = ()
 
@@ -35,6 +36,8 @@ class SignupForm(UserCreationForm):
 
 
 class UserChangeForm(UserChangeForm):
+    password = None
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.visible_fields():
