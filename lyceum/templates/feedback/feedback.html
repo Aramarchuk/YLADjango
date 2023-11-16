@@ -4,9 +4,9 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <ul>
-        {{ author_form.as_ul }}
-        {{ feedback_form.as_ul }}
-        {{ file_form.as_ul }}
+        {% for form in forms %}
+            {{form.as_ul}}
+        {% endfor %}
     </ul>
     <input type="submit" value="Отправить">
 </form>
