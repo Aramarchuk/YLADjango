@@ -9,7 +9,7 @@ class ProxyUserMiddleware:
 
     def __call__(self, request):
         if request.user.id:
-            request.user = users.models.User.objects.active().get(
+            request.user = users.models.User.objects.get(
                 id=request.user.id,
             )
 

@@ -11,17 +11,14 @@ __all__ = "Profile"
 
 
 class UserManager(BaseUserManager):
-    def active(self):
-        return (
-            self.get_queryset()
-            .filter(is_active=True)
-            .select_related(
-                "profile",
-            )
-        )
+    def get_queryset(self):
+        return super().get_queryset().select_related("profile")
 
-    def by_mail(self, email):
-        return self.active().get(email=email)
+    def active(self):
+        return self.get_queryset().filter(is_active=True)
+
+    def by_mail(self, mail):
+        return self.get_queryset().get(email=mail)
 
 
 class User(BaseUser):
