@@ -208,6 +208,6 @@ LOGIN_REDIRECT_URL = "../profile/"
 LOGOUT_REDIRECT_URL = "../login/"
 
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
     "users.backends.EmailAuthBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
